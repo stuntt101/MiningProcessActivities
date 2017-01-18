@@ -10,6 +10,7 @@ import com.activities.entities.SubActivity;
 import com.activities.hibernate.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -39,5 +40,51 @@ public class SubActivityService {
 	    session.close();
 	}
 	return list;
+    }
+    
+        public boolean addSubActivity(SubActivity subActivity) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        if (isSubActivityExists(subActivity)) {
+            return false;
+        }
+
+        Transaction tx = null;
+        try {
+            tx = session.getTransaction();
+            tx.begin();
+            session.save(subActivity);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+            public boolean isSubActivityExists(SubActivity subActivity) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        boolean result = false;
+        Transaction tx = null;
+        try {
+            tx = session.getTransaction();
+            tx.begin();
+            Query query = session.createQuery("from SubActivity where subActivityId='" + subActivity.getSubActivityId()+ "'");
+            SubActivity mt = (SubActivity) query.uniqueResult();
+            tx.commit();
+            if (mt != null) {
+                result = true;
+            }
+        } catch (Exception ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return result;
     }
 }

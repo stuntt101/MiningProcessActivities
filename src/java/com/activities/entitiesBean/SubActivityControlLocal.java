@@ -23,5 +23,6 @@ public interface SubActivityControlLocal {
     public void deleteSubActivity(String id);
 
     public List getAllSubActivities();
-    
+
+
 }

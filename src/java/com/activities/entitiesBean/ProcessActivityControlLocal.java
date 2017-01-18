@@ -23,5 +23,7 @@ public interface ProcessActivityControlLocal {
     public void deleteProcessActivity(String id);
 
     public List getAllProcessActivities();
+
+
     
 }

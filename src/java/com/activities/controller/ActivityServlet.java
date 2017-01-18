@@ -30,8 +30,9 @@ public class ActivityServlet extends HttpServlet {
         
         SubActivity sa = new SubActivity();
         
-        sa.setSubActivityId(Integer.parseInt(request.getParameter("sub_activity_id")));
+        sa.setSubActivityId(Integer.SIZE);
         sa.setProcessActivityName(new ProcessActivity(request.getParameter("process_activity_name")));
+//        sa.setProcessActivityName(request.getParameter("process_activity_name"));
         sa.setSubActivityName(request.getParameter("sub_activity_name"));
         
         return sa;

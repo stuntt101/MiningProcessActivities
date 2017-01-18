@@ -4,6 +4,10 @@
     Author     : ERavhengani
 --%>
 
+<%@page import="com.activities.services.FocusAreaService"%>
+<%@page import="com.activities.services.ProcessActivityService"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.activities.services.SubActivityService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -107,6 +111,7 @@
                 float: left;
                 position: fixed;
                 overflow-x:  scroll;
+                z-index: -1;
             }
             .table td{
                 width:100px;
@@ -118,6 +123,16 @@
 
     </head>
     <body>
+        <%
+            SubActivityService subActivityService = new SubActivityService();
+            request.setAttribute("listSubActivities", subActivityService.getAllSubActivities());
+
+            ProcessActivityService paService = new ProcessActivityService();
+            request.setAttribute("listProcess", paService.getAllProcessActivities());
+
+            FocusAreaService faService = new FocusAreaService();
+            request.setAttribute("listFocusAreas", faService.getAllFocusAreas());
+        %>
 
         <!--        <div class="table-content">
                     <button class="btn btn-link add-col">Add Column</button>
@@ -161,17 +176,17 @@
         <button id="onclick">Add Column</button>
         <!--<p id="onclick">Popup</p>-->
         <div id="contactdiv">
-            <form class="form"  id="contact" action="ActivitiesView" method="POST" >
+            <form class="form"  id="contact" action="AddNewSubActivity" method="POST" >
                 <img src="images/button_cancel.png" class="img" id="cancel"/>
                 <h3>New sub activity</h3>
                 <hr/><br/>
-                <label>Process activity name: <span>*</span></label>
+                <label>Process activity: <span>*</span></label>
                 <br/>
-                <input type="text" id="name" name="process_activity_name" placeholder="Name"/><br/>
+                <input type="text" id="name" name="process_activity_name" placeholder="process activity"/><br/>
                 <br/>
-                <label>Sub-activity name: <span>*</span></label>
+                <label>Sub-activity: <span>*</span></label>
                 <br/>
-                <input type="text" id="email"  name="sub_activity_name" placeholder="Email"/><br/>
+                <input type="text" id="email"  name="sub_activity_name" placeholder="sub activity"/><br/>
                 <br/>
 
 
@@ -181,239 +196,72 @@
             </form>
 
         </div>
-<!--        <table>
-            <c:forEach items="${listSubActivities}" var="sub">
-                <tr class="tr1">
-                    <td></td>
-                    <td><c:out value="${sub.processActivityName.processActivityName}" /></td>
-                                                <th>Blasting</th>
-                                                <th>Cleaning</th>
-                </tr>
-            </c:forEach>
-        </table>-->
 
 
-        <!--        <form action="ActivitiesView" name="form" method="POST" autocomplete='off'>
-                <div class="table-content">
-                    <button  class="btn btn-link add-col" onclick='getName()'>Add Column</button>
-                    <div class="table-responsive">
-                        <table border="1" class="table" id="table">
-                            <thead class="thead">
-                                <tr class="tr">
-                                    <th>Criteria</th>
-                                    <th colspan="3">
-                                        <b><center>Stopping</center></b>
-                                    </th>
+
         
+        <form action="ActivityView" name="form" method="POST" autocomplete='off'>
+            <div class="table-content">
+                <button  class="btn btn-link add-col" onclick='getName()'>Add Column</button>
+                <div class="table-responsive">
+                    <table border="1" class="table" id="table">
+                        <thead class="thead">
+                            <tr class="tr">
+                                <th>Criteria</th>
+                                <th>
+                                    <b><center>Stopping</center></b>
+                                </th>
+
+                            </tr>
+                            <tr>
+                                <th></th>
+                                    <c:forEach items="${listSubActivities}" var="sub">
+                                    <th>
+                                        <c:out value="${sub.subActivityName}" />
+                                        <table border="1" class="table">
+                                            <tr>
+                                                <td>Issues </td>
+                                                <td>Solutions</td>
+                                            </tr>
+                                        </table> 
+                                    </th>
+                                </c:forEach>
+                            </tr>
+
+                               
+                          
+                        </thead>
+                        <tbody class="tbody">
+                            <c:forEach items="${listFocusAreas}" var="fa">
+                                <tr class="tr1">
+                                    <td>${fa.focusAreaName}</td>
+                                        <c:forEach items="${listSubActivities}" var="sub">
+                                        <td>
+                                            <table border="1" class="table">
+<!--                                                <tr>
+                                                    <td>Issues </td>
+                                                    <td>Solutions</td>
+                                                </tr>-->
+                                                <tr>
+                                                    <td>1 </td>
+                                                    <td>1</td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                        <!--                                          <th>Blasting</th>
+                                                                                    <th>Cleaning</th>-->
+                                    </c:forEach> 
                                 </tr>
-        <c:forEach items="${listSubActivities}" var="sub">
-            <tr class="tr1">
-                <th></th>
-                <th><c:out value="${sub.subActivityName}" /></th>
-                                            <th>Blasting</th>
-                                            <th>Cleaning</th>
-            </tr>
-        </c:forEach>
-        <tr class="tr2">
-            <th></th>
-            <th>                              
-                <table border="1" class="table">
-                    <tr>
-                        <th>Issues </th>
-                        <th>Solutions</th>
-                    </tr>
-                </table></th>
-            <th>
-                <table border="1" class="table">
-                    <tr>
-                        <th>Issues </th>
-                        <th>Solutions</th>
-                    </tr>
-                </table>
-            </th>
-            <th>                               <table border="1" class="table">
-                    <tr>
-                        <th>Issues </th>
-                        <th>Solutions</th>
-                    </tr>
-                </table>
+                            </c:forEach>
+                        </tbody>
+                    </table>
 
-            </th>
+                </div>
+                <!--<button class="btn btn-link add-row">Add Row</button>-->
+            </div>
 
-        </tr>
-    </thead>
-    <tbody class="tbody">
-        <tr class="tr">
-            <td>OHS</td>
-            <td>
-                <table border="2" class="table">
-                                                        <tr>
-                                                            <th>Issues </th>
-                                                            <th>Solutions</th>
-                                                        </tr>
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table  border="2" class="table">
-                                                        <tr>
-                                                            <th>Issues </th>
-                                                            <th>Solutions</th>
-                                                        </tr>
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table>
-            </td>
-            <td> 
-                <table  border="2" class="table">
-                    <tr>
-                         <th>Issues</th>
-                         <th>Solutions</th>
-                        </tr>
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr class="tr">
-            <td>Cost Reduction</td>
-            <td>    
-                <table  border="2" class="table">
-
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table></td>
-            <td>
-                <table  border="2" class="table">
-
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table  border="2" class="table">
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr class="tr">
-            <td>Efficiencies</td>
-            <td><table  border="2" class="table">
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table></td>
-            <td>     
-                <table  border="2" class="table">
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table></td>
-            <td>                   
-                <table  border="2" class="table">
-
-                    <tr>
-                        <td>1 </td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2 </td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3 </td>
-                        <td>3</td>
-                    </tr>
-                </table></td>
-        </tr>
-    </tbody>
-</table>
-
-</div>
-        <button class="btn btn-link add-row">Add Row</button>
-</div>
-
-</form>-->
+        </form>
     </center>
 </body>
 </html>

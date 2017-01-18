@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ERavhengani
  */
-@WebServlet(name = "ActivitiesView", urlPatterns = {"/ActivitiesView"})
+@WebServlet(name = "ActivityView", urlPatterns = {"/ActivityView"})
 public class ActivityView extends HttpServlet {
 
     @EJB
