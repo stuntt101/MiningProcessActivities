@@ -7,15 +7,14 @@ package com.activities.controller;
 
 import com.activities.entities.ProcessActivity;
 import com.activities.entities.SubActivity;
+import com.activities.entitiesBean.ProcessActivityControlLocal;
+import com.activities.services.ProcessActivityService;
 import com.activities.services.SubActivityService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,61 +22,113 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ERavhengani
  */
-public class AddNewSubActivity {
-     public void doPost(HttpServletRequest request, HttpServletResponse response)
+public class AddNewSubActivity extends HttpServlet {
+
+    private ActivityServlet aserv = new ActivityServlet();
+
+    @EJB
+    private ProcessActivityControlLocal pacl;
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-              
-       
-        String processActivityName = request.getParameter("process_activity_name");
-//        sa.setProcessActivityName(request.getParameter("process_activity_name"));
-        String subActivityName = request.getParameter("sub_activity_name");
+        try (PrintWriter out = response.getWriter()) {
+            String action = request.getParameter("action");
+            SubActivityService saService = new SubActivityService();
+            ProcessActivityService paService = new ProcessActivityService();
+            SubActivity subActivity = new SubActivity();
+            ProcessActivity processActivity = new ProcessActivity();
 
-        // String mineName = request.getParameter("mineName").split(",")[1];
-          SubActivity sa = new SubActivity();
-          ProcessActivity pa = new ProcessActivity();
-          pa.setProcessActivityName(processActivityName);
-        
-            sa.setSubActivityId(Integer.SIZE);
-                sa.setProcessActivityName(pa);
-                sa.setSubActivityName(subActivityName);
+            if (action.equalsIgnoreCase("addSubActivity")) {
 
-       
+                String processActivityName = request.getParameter("process_activity_name");
+                String SubActivityName = request.getParameter("sub_activity_name");
 
-        try {
+                processActivity.setProcessActivityName(processActivityName);
+                subActivity.setSubActivityId(Integer.SIZE);
+                subActivity.setProcessActivityName(processActivity);
+                subActivity.setSubActivityName(SubActivityName);
 
-            SubActivityService subActivityService = new SubActivityService();
-
-            //check if the username or email address is already exist in the database
-            if (subActivityService.isSubActivityExists(sa)) {
-
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Sub activity already exists');");
-                out.println("location='index.jsp';");
-                out.println("</script>");
-
-            } else {
-
-                boolean result = subActivityService.addSubActivity(sa);
-
+                boolean result = saService.addSubActivity(subActivity);
                 if (result) {
                     out.println("<script type=\"text/javascript\">");
-                    out.println("alert('new sub activity added');");
+                    out.println("alert('New sub activity sucessfully added.');");
+                    out.println("location='stopping.jsp';");
+                    out.println("</script>");
+                } else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Sub activity already exists.');");
+                    out.println("location='stopping.jsp';");
+                    out.println("</script>");
+                }
+            }
+            if (action.equalsIgnoreCase("addProcessActivity")) {
+
+                String processActivityName = request.getParameter("process_activity_name");
+                processActivity.setProcessActivityName(processActivityName);
+                boolean res = paService.addProcessActivity(processActivity);
+                if (res) {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Process activity added');");
                     out.println("location='index.jsp';");
                     out.println("</script>");
-
+                } else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Process activity already exists');");
+                    out.println("location='index.jsp';");
+                    out.println("</script>");
                 }
 
             }
-
-        } finally {
-            out.close();
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //doPost(request, response);
+        processRequest(request, response);
     }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

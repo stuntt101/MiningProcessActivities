@@ -8,6 +8,10 @@
         <servlet-name>ActivityServlet</servlet-name>
         <servlet-class>com.activities.controller.ActivityServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddNewSubActivity</servlet-name>
+        <servlet-class>com.activities.controller.AddNewSubActivity</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActivityView</servlet-name>
         <url-pattern>/ActivityView</url-pattern>
@@ -16,12 +20,16 @@
         <servlet-name>ActivityServlet</servlet-name>
         <url-pattern>/ActivityServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewSubActivity</servlet-name>
+        <url-pattern>/AddNewSubActivity</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-        <welcome-file-list>
+    <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

@@ -50,21 +50,11 @@ public class ActivityView extends HttpServlet {
 
             String action = request.getParameter("action");
 
-            if (action.equalsIgnoreCase("viewActivities")) {
-
-                List<SubActivity> sActivity = sacl.getAllSubActivities();
-                request.setAttribute("sActivity", sActivity);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+            if(action.equalsIgnoreCase("addProcessActivity")){
+            request.getRequestDispatcher("addProcessActivity.jsp").forward(request, response);
             }
-            if (action.equalsIgnoreCase("Send")) {
-
-                List<SubActivity> sActivity = new ArrayList<>();
-                SubActivity subActivity = aserv.RegisterSubActivity(request, response);
-                sacl.addSubActivity(subActivity);
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('new sub activity added!');");
-                out.println("location='index.jsp';");
-                out.println("</script>");
+            if(action.equalsIgnoreCase("viewActivity")){
+            request.getRequestDispatcher("stopping.jsp").forward(request, response);
             }
 
         }

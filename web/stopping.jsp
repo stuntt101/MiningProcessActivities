@@ -115,15 +115,6 @@
                 height:20px;
                 background:#cccccc;
             }
-            button{
-                width:100%;
-                height:35px;
-                margin-top:5px;
-                border:1px solid #999;
-                border-radius:3px;
-                padding:5px;
-            }
-
 
         </style>
 
@@ -139,9 +130,50 @@
             FocusAreaService faService = new FocusAreaService();
             request.setAttribute("listFocusAreas", faService.getAllFocusAreas());
         %>
+
+        <!--        <div class="table-content">
+                    <button class="btn btn-link add-col">Add Column</button>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Define</th>
+                                    <th>
+                                        <input type="text" class="form-control pull-left" value="Property" readonly>
+                                        <span class="pull-left remove remove-col">x</span>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control pull-left" value="Feature" readonly>
+                                        <span class="pull-left remove remove-col">x</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="remove remove-row">x</span></td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        static element
+                                    </td>
+                                    <td>
+                                        static element
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-link add-row">Add Row</button>
+                </div>-->
+
+    <center>
+
+        <!--<button id="onclick">Add SubActivity</button>-->
         
-        <h2> Mining Process Activities</h2>
-                <div id="contactdiv">
+        <!--<p id="onclick">Popup</p>-->
+        <div id="contactdiv">
             <form class="form"  id="contact" action="AddNewSubActivity" method="POST" >
                 <img src="images/button_cancel.png" class="img" id="cancel"/>
                 <h3>Add new sub activity</h3>
@@ -149,51 +181,101 @@
                 <label>Process activity: <span>*</span></label>
                 <br/>
 
+                <select name="process_activity_name" id="pActivity">
+                    <option disabled selected value value="hide">Select process activity name</option>
+                    <c:forEach items="${listProcess}" var="pa">
+                        <option value="${pa.processActivityName}">${pa.processActivityName}</option>
+                    </c:forEach>
+                </select>
 
-                <input type="text" id="name" name="process_activity_name" placeholder="process activity"/><br/>
+                <!--<input type="text" id="name" name="process_activity_name" placeholder="process activity"/><br/>-->
                 <br/>
-                <input type="submit" id="send" name="action" value="addProcessActivity"/>
+                <label>Sub-activity: <span>*</span></label>
+                <br/>
+                <input type="text" id="email"  name="sub_activity_name" placeholder="sub activity"/><br/>
+                <br/>
+
+
+                <input type="submit" id="send" name="action" value="addSubActivity"/>
                 <input type="button" id="cancel" value="Cancel"/>
                 <br/>
             </form>
 
         </div>
-        <fieldset>
-            <form action="ActivityView" method="POST"> 
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
+
+
+
+
+
+        <form action="ActivityView" name="form" method="POST" autocomplete='off'>
+            <!--<button  class="btn btn-link add-col" onclick='getName()'>Add Column</button>-->
+            <button type="submit" name="action" value="addProcessActivity">Leading Practices</button>
+            <p>&nbsp;</p>
+
+            <table border="1" class="table" id="table">
+                <thead class="thead">
+                    <tr class="tr">
+                        <th>Criteria</th>
+                        <th>
+                            <b><center>Stopping</center></b>
+                        </th>
 
                     </tr>
+                    <tr>
+                        <th></th>
+                            <c:forEach items="${listSubActivities}" var="sub">
+                            <th>
+                                <c:out value="${sub.subActivityName}" />
+                                <table border="1" class="table">
+                                    <tr>
+                                        <td>Issues </td>
+                                        <td>Solutions</td>
+                                    </tr>
+                                </table> 
+                            </th>
+                        </c:forEach>
+                        <th>
+                            <button type="button"><img src="images/add_new.png" width="25" height="25" id="onclick" /></button>
+                        </th>
+                    </tr>
+
+
+
                 </thead>
-                <tbody>
-                   
-                    <c:forEach items="${listProcess}" var="pa">
-                        <tr>
-                            <td><button  type="submit" name="action" value="ViewActivity">${pa.processActivityName}</button></td>
+                <tbody class="tbody">
+                    <c:forEach items="${listFocusAreas}" var="fa">
+                        <tr class="tr1">
+                            <td>${fa.focusAreaName}</td>
+                            <c:forEach items="${listSubActivities}" var="sub">
+                                <td>
+                                    <table border="1" class="table">
+                                        <!--                                                <tr>
+                                                                                            <td>Issues </td>
+                                                                                            <td>Solutions</td>
+                                                                                        </tr>-->
+                                        <tr>
+                                            <td>1 </td>
+                                            <td>1</td>
+                                        </tr>
+
+                                    </table>
+
+                                </td>
+                                <!--                                          <th>Blasting</th>
+                                                                            <th>Cleaning</th>-->
+                            </c:forEach> 
                         </tr>
                     </c:forEach>
-                
-<!--                      <tr><td><button type="submit" name="development">Development</button></td> </tr>
-                      <tr><td><button type="submit" name="Infrastructure">Infrastructure</button></td> </tr>
-                      <tr><td><button type="submit" name="Processes">Processes</button></td> </tr>
-                      <tr><td><button type="submit" name="RandC">Reporting and Control</button></td> </tr>
-                      <tr><td><button type="submit" name="Services">Services</button></td> </tr>
-                      <tr><td><button type="submit" name="sP">Stope Preparation</button></td> </tr>
-                      <tr><td><button type="submit" name="Stopping">Stopping</button></td> </tr>
-                      <tr><td><button type="submit" name="TandTInbound">Tramming and Transport(inbound)</button></td> </tr>
-                      <tr><td><button type="submit" name="TandTInbound">Tramming and Transport(outbound)</button></td> </tr>
-                      <tr><td><button>Add New</button></td> </tr>
-                -->
+
                 </tbody>
             </table>
-                </form>
-              <div style="width: 18% ">
-                <button id="onclick">Add New</button>
-                </div>
-        </fieldset>
 
-    </body>
+            <!--<button class="btn btn-link add-row">Add Row</button>-->
+
+        </form>
+
+    </center>
+
+</body>
 </html>
 

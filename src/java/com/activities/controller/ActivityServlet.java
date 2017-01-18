@@ -37,6 +37,16 @@ public class ActivityServlet extends HttpServlet {
         
         return sa;
     }
+    public ProcessActivity RegisterProcessActivity (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
+        
+        ProcessActivity pa = new ProcessActivity();
+        
+        pa.setProcessActivityName(request.getParameter("process_activity_name"));
+
+        
+        return pa;
+    }
     
 
 
