@@ -19,29 +19,26 @@ import javax.persistence.Query;
 @Stateless
 public class SubActivityControl implements SubActivityControlLocal {
 
-   @PersistenceContext
+  @PersistenceContext
     private EntityManager em;
-   
+  
       @Override
     public void addSubActivity(SubActivity subActivity) {
         em.persist(subActivity);
     }
-    
-        @Override
+      @Override
     public void updateSubActivity(SubActivity subActivity) {
         em.merge(subActivity);
     }
-    
-        @Override
-    public void deleteSubActivity(String id) {
+      @Override
+    public void deleteSubActivity(String id ) {
         em.remove(em.find(SubActivity.class, id));
     }
     
-        @Override
-    public List getAllSubActivities() {
+      @Override
+    public List getSubActivity() {
        Query query =  em.createNamedQuery("SubActivity.findAll").setMaxResults(100);
        return query.getResultList();  
     }
-
-
+    
 }

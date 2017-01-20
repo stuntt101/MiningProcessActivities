@@ -18,29 +18,31 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProcessActivityControl implements ProcessActivityControlLocal {
-
-    @PersistenceContext
+    
+@PersistenceContext
     private EntityManager em;
-   
-      @Override
+
+    
+     @Override
     public void addProcessActivity(ProcessActivity processActivity) {
         em.persist(processActivity);
-    }
+    }  
     
-            @Override
+     @Override
     public void updateProcessActivity(ProcessActivity processActivity) {
         em.merge(processActivity);
-    }
+    }  
     
-          @Override
+     @Override
     public void deleteProcessActivity(String id) {
         em.remove(em.find(ProcessActivity.class, id));
-    }
+    }  
     
-            @Override
-    public List getAllProcessActivities() {
+       @Override
+    public List getProcessActivities() {
        Query query =  em.createNamedQuery("ProcessActivity.findAll").setMaxResults(100);
        return query.getResultList();  
     }
+
     
 }
