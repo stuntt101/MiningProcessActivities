@@ -8,7 +8,6 @@ package com.activities.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,8 +39,8 @@ public class FocusArea implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "focus_area_name")
     private String focusAreaName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "focusAreaName")
-    private List<LeadingPractice> leadingPracticeList;
+    @OneToMany(mappedBy = "focusAreaName")
+    private List<SubActivity> subActivityList;
 
     public FocusArea() {
     }
@@ -59,12 +58,12 @@ public class FocusArea implements Serializable {
     }
 
     @XmlTransient
-    public List<LeadingPractice> getLeadingPracticeList() {
-        return leadingPracticeList;
+    public List<SubActivity> getSubActivityList() {
+        return subActivityList;
     }
 
-    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
-        this.leadingPracticeList = leadingPracticeList;
+    public void setSubActivityList(List<SubActivity> subActivityList) {
+        this.subActivityList = subActivityList;
     }
 
     @Override

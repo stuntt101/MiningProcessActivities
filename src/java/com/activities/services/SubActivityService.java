@@ -5,6 +5,7 @@
  */
 package com.activities.services;
 
+import com.activities.entities.FocusArea;
 import com.activities.entities.ProcessActivity;
 import com.activities.entities.SubActivity;
 import com.activities.hibernate.util.HibernateUtil;
@@ -110,5 +111,50 @@ public class SubActivityService {
         }
         return list;
 
-    }      
+    }    
+          
+       public List<SubActivity> getSubActivityByFocusAreaProcessActivity(FocusArea focusArea, ProcessActivity processActivityName) {
+
+        List<SubActivity> list = new ArrayList<SubActivity>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String QUERY = "from SubActivity s where s.focusAreaName='" + focusArea.getFocusAreaName() + "'and s.processActivityName='" + processActivityName.getProcessActivityName() + "'";
+
+        try {
+
+            tx = session.getTransaction();
+            tx.begin();
+            list = session.createQuery(QUERY).list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return list;
+    }       
+       public List<SubActivity> getSubActivityByFocusAreaProcessActivitySubActivity(FocusArea focusArea, ProcessActivity processActivityName, String subActivityName) {
+
+        List<SubActivity> list = new ArrayList<SubActivity>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String QUERY = "from SubActivity s where s.focusAreaName='" + focusArea.getFocusAreaName() + "'and s.processActivityName='" + processActivityName.getProcessActivityName() + "'and s.subActivityName='"+subActivityName+"'";
+
+        try {
+
+            tx = session.getTransaction();
+            tx.begin();
+            list = session.createQuery(QUERY).list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return list;
+    }       
 }

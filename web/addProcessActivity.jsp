@@ -4,7 +4,7 @@
     Author     : ERavhengani
 --%>
 
-<%@page import="com.activities.entities.LeadingPractice"%>
+<%@page import="com.activities.entities.SubActivity"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.activities.services.FocusAreaService"%>
 <%@page import="com.activities.services.ProcessActivityService"%>
@@ -44,14 +44,6 @@
                 height:20px;
                 background:#cccccc;
             }
-            button{
-                width:100%;
-                height:35px;
-                margin-top:5px;
-                border:1px solid #999;
-                border-radius:3px;
-                padding:5px;
-            }
 
 
         </style>
@@ -73,6 +65,7 @@
 
             FocusAreaService faService = new FocusAreaService();
             request.setAttribute("listFocusAreas", faService.getAllFocusAreas());
+            SubActivity subActivity = (SubActivity) request.getAttribute("subActivityName1");
 
         %>
 
@@ -81,43 +74,28 @@
             <hr/>
             <center>
                 <fieldset>
+                                         <%if (subActivity != null) {%>  
 
                     <table cellpading="7" cellspacing="7">
 
                         <tbody>
                             <tr>
-                                <td>Focus area</td>
+                                <td>Process activity</td>
                                 <td>
-
-                                    <input type="text" name="focus_area_name" id="focus_area_name" value="${OHS}" readonly/>
+                                    <input type="text" name="process_activity_name" id="process_activity_name" value="<%=subActivity.getProcessActivityName().getProcessActivityName()%>" />
                                 </td>
                             </tr>
                             <tr>
-                                <td>Process activity</td>
+                                <td>Focus area</td>
                                 <td>
-                                    <select name="process_activity_name" id="process_activity_name" onchange="fillInFields()">
-                                        <option disabled selected value value="hide">Select focus area</option>
-                                        <c:forEach items="${listSubActivities}" var="sa">
-                                            <option value="${sa.processActivityName.processActivityName},${sa.subActivityId},${sa.subActivityName}">${sa.processActivityName.processActivityName}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <input type="text" name="focus_area_name" id="focus_area_name" value="<%=subActivity.getFocusAreaName().getFocusAreaName()%>" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Sub activity</td>
-
-
                                 <td>
-                                    <!--                                                                        <select name="sub_activity_name" id="sub_activity_name">
-                                                                                                                <option disabled selected value value="hide">Select focus area</option>
-                                    <c:forEach items="${subActivityName}" var="sa">
-                                        <option value="${sa.subActivityName}">${sa.subActivityName}</option>
-                                    </c:forEach>
-                                </select>-->
-                                    <input type="hidden" name="sub_activity_id" id="sub_activity_id" readonly/>
-                                    <input type="text" name="sub_activity_name" id="sub_activity_name" readonly/>
+                                    <input type="text" name="sub_activity_name" id="sub_activity_name" value="<%=subActivity.getSubActivityName()%>" />
                                 </td>
-
                             </tr>
                             <tr>
                                 <td>Issues</td>
@@ -131,11 +109,11 @@
 
 
                                 <td>  </td>
-                                <td><input type="submit" id="send" name="action" value="addLeadingPractice"/> <input type="button" id="cancel" value="Cancel"/></td>
+                                <td><button type="submit" id="send" name="action" value="addSubActivity">Add Leading Practice</button> <input type="button" id="cancel" value="Cancel"/></td>
                             </tr>
                         </tbody>
                     </table>
-
+            <%}%>
                 </fieldset>
             </center>
 
