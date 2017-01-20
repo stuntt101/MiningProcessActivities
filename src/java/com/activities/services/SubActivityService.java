@@ -87,4 +87,28 @@ public class SubActivityService {
         }
         return result;
     }
+            
+          public List<SubActivity> getSubActivityByProcessActivityName(ProcessActivity processActivityName) {
+
+        List<SubActivity> list = new ArrayList<SubActivity>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String QUERY = "from SubActivity s where s.processActivityName='" + processActivityName.getProcessActivityName()+"'";
+
+        try {
+
+            tx = session.getTransaction();
+            tx.begin();
+            list = session.createQuery(QUERY).list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return list;
+
+    }      
 }

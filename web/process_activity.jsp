@@ -126,9 +126,9 @@
         <%
 
 //            String processActivityName = "Stopping";
-//            SubActivityService subActivityService = new SubActivityService();
-//            request.setAttribute("listSubActivities", subActivityService.getAllSubActivities());
-            
+            String processActivityName = request.getParameter("processActivityName");
+            SubActivityService subActivityService = new SubActivityService();
+            request.setAttribute("listSubActivities", subActivityService.getSubActivityByProcessActivityName(new ProcessActivity(processActivityName)));
 //
             ProcessActivityService paService = new ProcessActivityService();
             request.setAttribute("listProcess", paService.getAllProcessActivities());
@@ -147,9 +147,9 @@
 //            request.setAttribute("OHS", focusAreaname1);
 //            request.setAttribute("Cost", focusAreaname2);
 //            request.setAttribute("Efficiencies", focusAreaname3);
-        %>
+%>
 
-      
+
 
     <center>
 
@@ -164,14 +164,14 @@
                 <label>Process activity: <span>*</span></label>
                 <br/>
 
-                <select name="process_activity_name" id="pActivity">
+<!--                <select name="process_activity_name" id="pActivity">
                     <option disabled selected value value="hide">Select process activity name</option>
                     <c:forEach items="${listProcess}" var="pa">
                         <option value="${pa.processActivityName}">${pa.processActivityName}</option>
                     </c:forEach>
-                </select>
+                </select>-->
 
-                <!--<input type="text" id="name" name="process_activity_name" placeholder="process activity"/><br/>-->
+<input type="text" id="name" name="process_activity_name" value="${processActivityName}" readonly=""/><br/>
                 <br/>
                 <label>Sub-activity: <span>*</span></label>
                 <br/>
@@ -192,23 +192,21 @@
 
         <form action="ActivityView" name="form" method="POST" autocomplete='off'>
             <!--<button  class="btn btn-link add-col" onclick='getName()'>Add Column</button>-->
-            <button type="submit" name="action" value="addProcessActivity">Leading Practices</button>
+            <!--<button type="submit" name="action" value="addProcessActivity">Leading Practices</button>-->
             <p>&nbsp;</p>
-
-            <table border="1" class="table" id="table">
+            <h2>Process Activity: ${processActivityName}</h2>
+            <table border="1" class="table" >
                 <thead class="thead">
                     <tr class="tr">
                         <th>Criteria</th>
-                        <th>
-                            <b><center>${processActivityName}</center></b>
-                        </th>
+           
 
                     </tr>
                     <tr>
                         <th></th>
-                            <c:forEach items="${leadingPractices1}" var="sub">
+                            <c:forEach items="${listSubActivities}" var="sub">
                             <th>
-                                <c:out value="${sub.subActivityId.subActivityName}" />
+                                <c:out value="${sub.subActivityName}" />
                                 <table border="1" class="table">
                                     <tr>
                                         <td>Issues </td>
@@ -217,9 +215,9 @@
                                 </table> 
                             </th>
                         </c:forEach>
-                            <c:forEach items="${leadingPractices2}" var="sub">
+<!--                        <c:forEach items="${listSubActivities}" var="sub">
                             <th>
-                                <c:out value="${sub.subActivityId.subActivityName}" />
+                                <c:out value="${sub.subActivityName}" />
                                 <table border="1" class="table">
                                     <tr>
                                         <td>Issues </td>
@@ -228,9 +226,9 @@
                                 </table> 
                             </th>
                         </c:forEach>
-                            <c:forEach items="${leadingPractices3}" var="sub">
+                        <c:forEach items="${listSubActivities}" var="sub">
                             <th>
-                                <c:out value="${sub.subActivityId.subActivityName}" />
+                                <c:out value="${sub.subActivityName}" />
                                 <table border="1" class="table">
                                     <tr>
                                         <td>Issues </td>
@@ -239,7 +237,7 @@
                                 </table> 
                             </th>
                         </c:forEach>
-                        <th>
+-->                        <th>
                             <button type="button"><img src="images/add_new.png" width="25" height="25" id="onclick" /></button>
                         </th>
                     </tr>
@@ -248,81 +246,67 @@
 
                 </thead>
                 <tbody class="tbody">
-                   
-                        <tr class="tr1">
-                            <td>${OHS}</td>
-                                                   <c:forEach items="${leadingPractices1}" var="sub">
-                                <td>
-                                    <table border="1" class="table">
-                                        <!--                                                <tr>
-                                                                                            <td>Issues </td>
-                                                                                            <td>Solutions</td>
-                                                                                        </tr>-->
-                                        <tr>
-                                            <td>${sub.issues}</td>
-                                            <td>${sub.solutions}</td>
-                                        </tr>
 
-                                    </table>
+                    <tr class="tr1">
+                        <td>${OHS}</td>
+                        <c:forEach items="${leadingPractices1}" var="sub">
+                            <td>
+                                <table border="1" class="table">
+                                    <tr>
+                                        <td>${sub.issues}</td>
+                                        <td>${sub.solutions}</td>
 
-                                </td>
-                                <!--                                          <th>Blasting</th>
-                                                                            <th>Cleaning</th>-->
-                            </c:forEach> 
-                        </tr>
-                         <tr class="tr1">
-                            <td>${Cost}</td>
-                                                   <c:forEach items="${leadingPractices2}" var="sub">
-                                <td>
-                                    <table border="1" class="table">
-                                        <!--                                                <tr>
-                                                                                            <td>Issues </td>
-                                                                                            <td>Solutions</td>
-                                                                                        </tr>-->
-                                        <tr>
-                                            <td>${sub.issues}</td>
-                                            <td>${sub.solutions}</td>
-                                        </tr>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><button type="button"  onclick="location.href = 'ActivityView?action=leadingPractices'">Add new</button></td>
 
-                                    </table>
-
-                                </td>
-                                <!--                                          <th>Blasting</th>
-                                                                            <th>Cleaning</th>-->
-                            </c:forEach> 
-                        </tr>
-                         <tr class="tr1">
-                            <td>${Efficiencies}</td>
-                                                   <c:forEach items="${leadingPractices3}" var="sub">
-                                <td>
-                                    <table border="1" class="table">
-                                        <!--                                                <tr>
-                                                                                            <td>Issues </td>
-                                                                                            <td>Solutions</td>
-                                                                                        </tr>-->
-                                        <tr>
-                                            <td>${sub.issues}</td>
-                                            <td>${sub.solutions}</td>
-                                        </tr>
-
-                                    </table>
-
-                                </td>
-                                <!--                                          <th>Blasting</th>
-                                                                            <th>Cleaning</th>-->
-                            </c:forEach> 
-                        </tr>
-                   
-
+                                    </tr>
+                                </table>
+                            </td>
+                        </c:forEach> 
+                    </tr>
+                    <tr class="tr1">
+                        <td>${Cost}</td>
+                        <c:forEach items="${leadingPractices2}" var="sub">
+                            <td>
+                                <table border="1" class="table">
+                                    <tr>
+                                        <td>${sub.issues}</td>
+                                        <td>${sub.solutions}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align: center;"><button type="button"  onclick="location.href = 'ActivityView?action=leadingPractices'">Add new</button></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </c:forEach> 
+                    </tr>
+                    <tr class="tr1">
+                        <td>${Efficiencies}</td>
+                        <c:forEach items="${leadingPractices3}" var="sub">
+                            <td>
+                                <table border="1" class="table">
+                                    <tr>
+                                        <td>${sub.issues}</td>
+                                        <td>${sub.solutions}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><button type="button"  onclick="location.href = 'ActivityView?action=leadingPractices'">Add new</button></td>           
+                                    </tr>
+                                </table>
+                            </td>
+                        </c:forEach> 
+                    </tr>
                 </tbody>
             </table>
-
-            <!--<button class="btn btn-link add-row">Add Row</button>-->
-
         </form>
 
     </center>
- <button type="button" name="back" onclick="location.href = 'index.jsp'">Back</button>
+    <p>&nbsp;</p>
+
+    <div style="float: left;">
+        <button type="button" name="back" onclick="location.href = 'index.jsp'">Back</button>
+    </div>
 </body>
 </html>
 
