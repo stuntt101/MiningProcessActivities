@@ -7,7 +7,6 @@ package com.activities.controller;
 
 import com.activities.entities.ProcessActivity;
 import com.activities.entities.SubActivity;
-import com.activities.entitiesBean.ProcessActivityControlLocal;
 import com.activities.services.ProcessActivityService;
 import com.activities.services.SubActivityService;
 import java.io.IOException;
@@ -26,8 +25,7 @@ public class AddNewSubActivity extends HttpServlet {
 
     private ActivityServlet aserv = new ActivityServlet();
 
-    @EJB
-    private ProcessActivityControlLocal pacl;
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,12 +60,12 @@ public class AddNewSubActivity extends HttpServlet {
                 if (result) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('New sub activity sucessfully added.');");
-                    out.println("location='stopping.jsp';");
+                    out.println("location='index.jsp';");
                     out.println("</script>");
                 } else {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Sub activity already exists.');");
-                    out.println("location='stopping.jsp';");
+                    out.println("location='index.jsp';");
                     out.println("</script>");
                 }
             }

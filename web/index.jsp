@@ -4,7 +4,6 @@
     Author     : ERavhengani
 --%>
 
-<%@page import="com.activities.services.LeadingPracticeService"%>
 <%@page import="com.activities.services.FocusAreaService"%>
 <%@page import="com.activities.services.ProcessActivityService"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

@@ -6,7 +6,6 @@
 package com.activities.services;
 
 import com.activities.entities.FocusArea;
-import com.activities.entities.LeadingPractice;
 import com.activities.entities.ProcessActivity;
 import com.activities.hibernate.util.HibernateUtil;
 import java.util.ArrayList;

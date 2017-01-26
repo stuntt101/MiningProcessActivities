@@ -6,9 +6,7 @@
 package com.activities.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,7 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "SubActivity.findAll", query = "SELECT s FROM SubActivity s"),
     @NamedQuery(name = "SubActivity.findBySubActivityId", query = "SELECT s FROM SubActivity s WHERE s.subActivityId = :subActivityId"),
-    @NamedQuery(name = "SubActivity.findBySubActivityName", query = "SELECT s FROM SubActivity s WHERE s.subActivityName = :subActivityName")})
+    @NamedQuery(name = "SubActivity.findBySubActivityName", query = "SELECT s FROM SubActivity s WHERE s.subActivityName = :subActivityName"),
+    @NamedQuery(name = "SubActivity.findByIssues", query = "SELECT s FROM SubActivity s WHERE s.issues = :issues"),
+    @NamedQuery(name = "SubActivity.findBySolutions", query = "SELECT s FROM SubActivity s WHERE s.solutions = :solutions")})
 public class SubActivity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +47,18 @@ public class SubActivity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "sub_activity_name")
     private String subActivityName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subActivityId")
-    private List<LeadingPractice> leadingPracticeList;
+    @Size(max = 2000)
+    @Column(name = "issues")
+    private String issues;
+    @Size(max = 2000)
+    @Column(name = "solutions")
+    private String solutions;
     @JoinColumn(name = "process_activity_name", referencedColumnName = "process_activity_name")
     @ManyToOne(optional = false)
     private ProcessActivity processActivityName;
+    @JoinColumn(name = "focus_area_name", referencedColumnName = "focus_area_name")
+    @ManyToOne
+    private FocusArea focusAreaName;
 
     public SubActivity() {
     }
@@ -83,13 +88,20 @@ public class SubActivity implements Serializable {
         this.subActivityName = subActivityName;
     }
 
-    @XmlTransient
-    public List<LeadingPractice> getLeadingPracticeList() {
-        return leadingPracticeList;
+    public String getIssues() {
+        return issues;
     }
 
-    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
-        this.leadingPracticeList = leadingPracticeList;
+    public void setIssues(String issues) {
+        this.issues = issues;
+    }
+
+    public String getSolutions() {
+        return solutions;
+    }
+
+    public void setSolutions(String solutions) {
+        this.solutions = solutions;
     }
 
     public ProcessActivity getProcessActivityName() {
@@ -98,6 +110,14 @@ public class SubActivity implements Serializable {
 
     public void setProcessActivityName(ProcessActivity processActivityName) {
         this.processActivityName = processActivityName;
+    }
+
+    public FocusArea getFocusAreaName() {
+        return focusAreaName;
+    }
+
+    public void setFocusAreaName(FocusArea focusAreaName) {
+        this.focusAreaName = focusAreaName;
     }
 
     @Override
