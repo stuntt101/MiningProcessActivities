@@ -20,30 +20,28 @@ import org.hibernate.Transaction;
  * @author ERavhengani
  */
 public class SubActivityService {
-    
 
-        
     public List<SubActivity> getAllSubActivities() {
-	List<SubActivity> list = new ArrayList<SubActivity>();
-	Session session = HibernateUtil.getSessionFactory().openSession();
-	Transaction tx = null;
-	try {
-	    tx = session.getTransaction();
-	    tx.begin();
-	    list = session.createQuery("from SubActivity").list();
-	    tx.commit();
-	} catch (Exception e) {
-	    if (tx != null) {
-		tx.rollback();
-	    }
-	    e.printStackTrace();
-	} finally {
-	    session.close();
-	}
-	return list;
+        List<SubActivity> list = new ArrayList<SubActivity>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.getTransaction();
+            tx.begin();
+            list = session.createQuery("from SubActivity").list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return list;
     }
-    
-        public boolean addSubActivity(SubActivity subActivity) {
+
+    public boolean addSubActivity(SubActivity subActivity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         if (isSubActivityExists(subActivity)) {
@@ -66,14 +64,15 @@ public class SubActivityService {
         }
         return true;
     }
-            public boolean isSubActivityExists(SubActivity subActivity) {
+
+    public boolean isSubActivityExists(SubActivity subActivity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean result = false;
         Transaction tx = null;
         try {
             tx = session.getTransaction();
             tx.begin();
-            Query query = session.createQuery("from SubActivity where subActivityId='" + subActivity.getSubActivityId()+ "'");
+            Query query = session.createQuery("from SubActivity where subActivityName ='" + subActivity.getSubActivityName()+ "'");
             SubActivity mt = (SubActivity) query.uniqueResult();
             tx.commit();
             if (mt != null) {
@@ -88,73 +87,6 @@ public class SubActivityService {
         }
         return result;
     }
-            
-          public List<SubActivity> getSubActivityByProcessActivityName(ProcessActivity processActivityName) {
-
-        List<SubActivity> list = new ArrayList<SubActivity>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        String QUERY = "from SubActivity s where s.processActivityName='" + processActivityName.getProcessActivityName()+"'";
-
-        try {
-
-            tx = session.getTransaction();
-            tx.begin();
-            list = session.createQuery(QUERY).list();
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return list;
-
-    }    
-          
-       public List<SubActivity> getSubActivityByFocusAreaProcessActivity(FocusArea focusArea, ProcessActivity processActivityName) {
-
-        List<SubActivity> list = new ArrayList<SubActivity>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        String QUERY = "from SubActivity s where s.focusAreaName='" + focusArea.getFocusAreaName() + "'and s.processActivityName='" + processActivityName.getProcessActivityName() + "'";
-
-        try {
-
-            tx = session.getTransaction();
-            tx.begin();
-            list = session.createQuery(QUERY).list();
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return list;
-    }       
-       public List<SubActivity> getSubActivityByFocusAreaProcessActivitySubActivity(FocusArea focusArea, ProcessActivity processActivityName, String subActivityName) {
-
-        List<SubActivity> list = new ArrayList<SubActivity>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        String QUERY = "from SubActivity s where s.focusAreaName='" + focusArea.getFocusAreaName() + "'and s.processActivityName='" + processActivityName.getProcessActivityName() + "'and s.subActivityName='"+subActivityName+"'";
-
-        try {
-
-            tx = session.getTransaction();
-            tx.begin();
-            list = session.createQuery(QUERY).list();
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return list;
-    }       
+    
+    
 }

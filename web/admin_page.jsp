@@ -1,10 +1,11 @@
 <%-- 
-    Document   : stope_preparation
-    Created on : 19 Jan 2017, 8:48:49 AM
+    Document   : admin_page
+    Created on : 27 Jan 2017, 9:35:58 AM
     Author     : ERavhengani
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.activities.entities.User"%>
 <%@page import="com.activities.services.FocusAreaService"%>
 <%@page import="com.activities.services.ProcessActivityService"%>
 <%@page import="com.activities.services.SubActivityService"%>
@@ -12,9 +13,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Stope Preparation</title>
+        <title>admin home</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles.css"/>
+
         <!--                <script type="text/javascript" src="bootstrap.min.js"></script>
                         <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>-->
         <!--<link rel="stylesheet" type="text/css" href="table-stylings.css"/>-->
@@ -29,8 +32,14 @@
         <script src="js/tableHeadFixer.js"></script>
         <script src="js/jquery.min.js"></script>
         <link rel="stylesheet" href="css/jquery_popup.css" />
+        <link rel="stylesheet" href="css/styles.css" />
         <script src="js/jquery_popup.js"></script>
-
+        <script src="js/jquery_popup_one.js"></script>
+        <script src="js/jquery_popup_two.js"></script>
+        <script src="js/jquery_popup_pa.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/table-stylings.css"/>
+        <script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
+        <script type="text/javascript" src="js/style-table.js"></script>
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -115,12 +124,27 @@
                 height:20px;
                 background:#cccccc;
             }
+            button{
+                width:100%;
+                height:35px;
+                margin-top:5px;
+                border:1px solid #999;
+                border-radius:3px;
+                padding:5px;
+            }
+            #top{
+                float: right;
+            }
+            #menu{
+                float: right;
+
+            }
 
         </style>
 
     </head>
     <body>
-          <%
+        <%
             SubActivityService subActivityService = new SubActivityService();
             request.setAttribute("listSubActivities", subActivityService.getAllSubActivities());
 
@@ -129,115 +153,95 @@
 
             FocusAreaService faService = new FocusAreaService();
             request.setAttribute("listFocusAreas", faService.getAllFocusAreas());
+            User user = (User) session.getAttribute("admin");
+            String firstname = user.getFirstname();
+            String lastname = user.getLastname();
+            request.setAttribute("firstname", firstname);
+            request.setAttribute("lastname", lastname);
+            request.setAttribute("user", user);
+
         %>
+        <div id="header">
+            <div id="header-wrap">
+                <table width="100%" height="40%" border="0" style="background-color: #004a8d; top: 0;">
+                    <tr align=”left”>
 
-
-    <center>
-
-        <!--<button id="onclick">Add SubActivity</button>-->
-        
-        <!--<p id="onclick">Popup</p>-->
-        <div id="contactdiv">
-            <form class="form"  id="contact" action="AddNewSubActivity" method="POST" >
-                <img src="images/button_cancel.png" class="img" id="cancel"/>
-                <h3>Add new sub activity</h3>
-                <hr/><br/>
-                <label>Process activity: <span>*</span></label>
-                <br/>
-
-                <select name="process_activity_name" id="pActivity">
-                    <option disabled selected value value="hide">Select process activity name</option>
-                    <c:forEach items="${listProcess}" var="pa">
-                        <option value="${pa.processActivityName}">${pa.processActivityName}</option>
-                    </c:forEach>
-                </select>
-
-                <!--<input type="text" id="name" name="process_activity_name" placeholder="process activity"/><br/>-->
-                <br/>
-                <label>Sub-activity: <span>*</span></label>
-                <br/>
-                <input type="text" id="email"  name="sub_activity_name" placeholder="sub activity"/><br/>
-                <br/>
-
-
-                <input type="submit" id="send" name="action" value="addSubActivity"/>
-                <input type="button" id="cancel" value="Cancel"/>
-                <br/>
-            </form>
+                        <td style="vertical-align:bottom;text-align:right; background-color: #004a8d;"><span style="float: left;"><img src="images/new_logo.jpg"  width="120" height="122" style="float: right;" alt="Logo" /></span></td>
+                        <td style="background-color: #004a8d; color: white;">
+                    <center> <b> <h2><strong>Mining Activities Feedback Form</strong></h2></b> </center></td>
+                    <td style="vertical-align: bottom; background-color: #004a8d;text-align:right; width: 47%; color: white;">   <div id="top"> Welcome <strong>${firstname} </strong> <span>|</span> <a href="logout.jsp" style="color: red;">Log out</a> </div>  </br>  
+                    </td>
+                    </tr>
+                </table>
+            </div>
 
         </div>
 
-
-
-
-
-        <form action="ActivityView" name="form" method="POST" autocomplete='off'>
-            <!--<button  class="btn btn-link add-col" onclick='getName()'>Add Column</button>-->
-            <button type="submit" name="action" value="addProcessActivity">Leading Practices</button>
-            <p>&nbsp;</p>
-
-            <table border="1" class="table" id="table">
-                <thead class="thead">
-                    <tr class="tr">
-                        <th>Criteria</th>
-                        <th>
-                            <b><center>Stopping</center></b>
-                        </th>
-
-                    </tr>
-                    <tr>
-                        <th></th>
-                            <c:forEach items="${listSubActivities}" var="sub">
-                            <th>
-                                <c:out value="${sub.subActivityName}" />
-                                <table border="1" class="table">
+        <br>
+        <br>
+        <br>
+        <div class="left">
+            <div id="contactdiv_pa">
+                <form class="form_pa"  id="contact_pa" action="AddNewSubActivity" method="POST" >
+                    <img src="images/button_cancel.png" class="img_pa" id="cancel_pa"/>
+                    <h3>Add new sub activity</h3>
+                    <hr/><br/>
+                    <label>Process activity: <span>*</span></label>
+                    <br/>
+                    <input type="text" id="name_pa" name="process_activity_name" placeholder="process activity"/><br/>
+                    <br/>
+                    <input type="submit" id="send_pa" name="action" value="addProcessActivity"/>
+                    <input type="button" id="cancel_pa" value="Cancel"/>
+                    <br/>
+                </form>
+            </div>
+            <br>
+            <fieldset class="formFieldset">
+                <legend class="formLegend"><b>Activities</b></legend>
+                <div class="outerDIV">
+                    <div class="innerDIV">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${listProcess}" var="pa">
                                     <tr>
-                                        <td>Issues </td>
-                                        <td>Solutions</td>
+                                        <td><button onclick="location.href = 'ActivityView?action=viewActivity&processActivityName=${pa.processActivityName}'" >${pa.processActivityName}</button></td>
                                     </tr>
-                                </table> 
-                            </th>
-                        </c:forEach>
-                        <th>
-                            <button type="button"><img src="images/add_new.png" width="25" height="25" id="onclick" /></button>
-                        </th>
-                    </tr>
+                                </c:forEach>                                                           
+                                <tr>
+                                    <td>
+                                        <img src="images/add_new_tab.png" width="25" height="25" id="onclick_pa" title="Add a new process activity" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <br>
+        <div class="center">
+            <br>
+            <fieldset class="menuFieldset">
+                <legend class="menuLegend"><b>View and add users</b></legend>
+
+                <div id="menu">
 
 
+                    <button onclick="location.href = 'new_user.jsp'">Add new user</button><br>
+                    <button onclick="location.href = 'all_users.jsp'">View all users</button>
 
-                </thead>
-                <tbody class="tbody">
-                <c:forEach items="${listFocusAreas}" var="fa">
-                        <tr class="tr1">
-                            <td>${fa.focusAreaName}</td>
-                            <c:forEach items="${listSubActivities}" var="sub">
-                                <td>
-                                    <table border="1" class="table">
-                                        <!--                                                <tr>
-                                                                                            <td>Issues </td>
-                                                                                            <td>Solutions</td>
-                                                                                        </tr>-->
-                                        <tr>
-                                            <td>1 </td>
-                                            <td>1</td>
-                                        </tr>
 
-                                    </table>
+                </div>
+            </fieldset>
+        </div>
 
-                                </td>
-                                <!--                                          <th>Blasting</th>
-                                                                            <th>Cleaning</th>-->
-                            </c:forEach> 
-                        </tr>
-                    </c:forEach>
-
-                </tbody>
-            </table>
-
-            <!--<button class="btn btn-link add-row">Add Row</button>-->
-
-        </form>
-
-    </center>
+        <div id="footer">
+            <div class="shell" style="text-align: center;"> <span class="center">Copyright &copy; CSIR 2017. All Rights Reserved.</span> <span class="right"></span> </div>
+        </div>
     </body>
 </html>

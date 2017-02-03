@@ -4,6 +4,7 @@
     Author     : ERavhengani
 --%>
 
+<%@page import="com.activities.entities.User"%>
 <%@page import="com.activities.services.FocusAreaService"%>
 <%@page import="com.activities.services.ProcessActivityService"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,6 +16,8 @@
         <title>View Process Activities</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles.css"/>
+
         <!--                <script type="text/javascript" src="bootstrap.min.js"></script>
                         <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>-->
         <!--<link rel="stylesheet" type="text/css" href="table-stylings.css"/>-->
@@ -123,6 +126,9 @@
                 border-radius:3px;
                 padding:5px;
             }
+            #top{
+                float: right;
+            }
 
 
         </style>
@@ -138,11 +144,21 @@
 
             FocusAreaService faService = new FocusAreaService();
             request.setAttribute("listFocusAreas", faService.getAllFocusAreas());
-            
-                %>
-        
+
+            User user = (User) session.getAttribute("user");
+            String firstname = user.getFirstname();
+            String lastname = user.getLastname();
+            request.setAttribute("firstname", firstname);
+            request.setAttribute("lastname", lastname);
+            request.setAttribute("user", user);
+
+        %>
+
+        <div id="top"> Welcome <strong>${firstname} ${lastname}</strong> <span>|</span><a href="#">Profile Settings</a> <span>|</span> <a href="logout.jsp">Log out</a> </div>  </br>  
+        <hr>
+
         <h2> Mining Process Activities</h2>
-                <div id="contactdiv">
+        <div id="contactdiv">
             <form class="form"  id="contact" action="AddNewSubActivity" method="POST" >
                 <img src="images/button_cancel.png" class="img" id="cancel"/>
                 <h3>Add new sub activity</h3>
@@ -160,39 +176,23 @@
 
         </div>
         <fieldset>
-            <!--<form action="ActivityView" method="POST">--> 
             <table>
                 <thead>
                     <tr>
                         <th></th>
-
                     </tr>
                 </thead>
                 <tbody>
-                   
-                    <c:forEach items="${listProcess}" var="pa">
-                        <tr>
+                    <tr>
+                        <c:forEach items="${listProcess}" var="pa">
                             <td><button onclick="location.href = 'ActivityView?action=viewActivity&processActivityName=${pa.processActivityName}'" >${pa.processActivityName}</button></td>
-                        </tr>
-                    </c:forEach>
-                
-<!--                      <tr><td><button type="submit" name="development">Development</button></td> </tr>
-                      <tr><td><button type="submit" name="Infrastructure">Infrastructure</button></td> </tr>
-                      <tr><td><button type="submit" name="Processes">Processes</button></td> </tr>
-                      <tr><td><button type="submit" name="RandC">Reporting and Control</button></td> </tr>
-                      <tr><td><button type="submit" name="Services">Services</button></td> </tr>
-                      <tr><td><button type="submit" name="sP">Stope Preparation</button></td> </tr>
-                      <tr><td><button type="submit" name="Stopping">Stopping</button></td> </tr>
-                      <tr><td><button type="submit" name="TandTInbound">Tramming and Transport(inbound)</button></td> </tr>
-                      <tr><td><button type="submit" name="TandTInbound">Tramming and Transport(outbound)</button></td> </tr>
-                      <tr><td><button>Add New</button></td> </tr>
-                -->
+                            </c:forEach>
+                    </tr>
                 </tbody>
             </table>
-                <!--</form>-->
-              <div style="width: 18% ">
+            <div style="width: 18% ">
                 <button id="onclick">Add New</button>
-                </div>
+            </div>
         </fieldset>
 
     </body>

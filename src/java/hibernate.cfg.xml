@@ -7,8 +7,10 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mining_process_activities</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">13579</property>
+    <mapping class="com.activities.entities.Activities"/>
     <mapping class="com.activities.entities.FocusArea"/>
     <mapping class="com.activities.entities.ProcessActivity"/>
     <mapping class="com.activities.entities.SubActivity"/>
+    <mapping class="com.activities.entities.User"/>
   </session-factory>
 </hibernate-configuration>

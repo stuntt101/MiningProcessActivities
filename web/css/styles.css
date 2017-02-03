@@ -1,0 +1,155 @@
+body{
+    font-family: sans-serif;
+    font-size: medium;
+    z-index: auto;
+}      
+nav {
+    font-family: arial, sans-serif;
+    position: relative;
+    font-size:14px;
+    color:#333;
+    margin: 0px auto;
+    z-index: 1;
+}  
+nav ul {
+    list-style-type: none;
+    border-bottom:4px solid #FFF;
+    margin: 0;
+}
+nav ul li {
+    float: left;
+    position: relative;
+    top:-38px;
+}
+
+nav ul li a {
+    text-align: center;
+    padding:10px 25px;
+    display:block;
+    text-decoration:none;
+    color:#FFF;
+    font-weight:bold;
+    text-shadow:-1px 0px 0px #bbb;
+    margin:0px 1px;
+    background: #d1dfe8;
+    background: -moz-linear-gradient(top, #d1dfe8 0%, #98c1d3 44%, #8ab9cd 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d1dfe8), color-stop(44%,#98c1d3), color-stop(100%,#8ab9cd));
+    background: -webkit-linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%); 
+    background: -o-linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%); 
+    background: -ms-linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%); 
+    background: linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d1dfe8', endColorstr='#8ab9cd',GradientType=0 );
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-top-left-radius: 5px;
+    -moz-border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+}
+nav ul li a:active{
+    color: red;
+    background-color: #004a8d;
+}
+nav ul li a[tabindex]:focus, .active{
+    background-color: #004a8d;
+    color: #fff;
+    outline: none;
+}
+
+nav ul li:hover > a {
+    background:#FFF;
+    color:#333;
+    text-shadow:none;
+}
+nav ul li ul {
+    display: none
+}
+#top{
+    float: right;
+}
+
+#header { height:89px; background:#004a8d; white-space:nowrap; }
+#footer { height:44px; background: #004a8d ; line-height:44px;
+          bottom:0;position: fixed; z-index: 0;  width: 99%;color: #fff;}
+
+div.left {
+    float: left;
+    height: 600px;
+    margin-right: 10px;
+    width: 200px;
+    z-index: 1;
+    /*background-color: #87b7d5;*/
+}
+div.center {
+overflow: scroll;  overflow: auto
+}
+
+button{
+    background-color: #004a8d;
+    padding:10px;
+    border-radius: 5px;
+    cursor: pointer;
+        width: 100%;
+        color: white;
+
+}
+button:hover {
+    background-color: #255625;
+
+
+}
+
+.formFieldset{
+/*    width: 180px;*/
+    height: 650px;
+    position: relative;
+    padding: 10px;
+    padding-top: 0;
+    padding-top: 25px;
+    display: inline-block;
+    margin-bottom:15px;
+    background: #F6F6F6; 
+    -webkit-border-radius: 8px; 
+    -moz-border-radius: 8px; 
+    border-radius:8px;
+    background: -webkit-gradient(linear, center top, left bottom, from(#EFEFEF), to(#FFFFFF));
+    background: -moz-linear-gradient(center top, #EFEFEF, #FFFFFF 100%);
+    box-shadow: 3px 3px 10px #ccc;
+    -moz-box-shadow: 3px 3px 10px #ccc; 
+    -webkit-box-shadow: 3px 3px 10px #ccc
+      
+}
+.menuFieldset{
+
+    width: 200px;
+    position: relative;
+    padding: 10px;
+    padding-top: 0;
+    padding-top: 25px;
+    display: inline-block;
+    margin-bottom:15px;
+    background: #F6F6F6; 
+    -webkit-border-radius: 8px; 
+    -moz-border-radius: 8px; 
+    border-radius:8px;
+    background: -webkit-gradient(linear, center top, left bottom, from(#EFEFEF), to(#FFFFFF));
+    background: -moz-linear-gradient(center top, #EFEFEF, #FFFFFF 100%);
+    box-shadow: 3px 3px 10px #ccc;
+    -moz-box-shadow: 3px 3px 10px #ccc; 
+    -webkit-box-shadow: 3px 3px 10px #ccc
+      
+}
+
+
+.formLegend,.menuLegend { padding: 2px 5px;
+              position: absolute; left: 10px;
+              top: -11px; background-color: #255625;
+              color: white; -webkit-border-radius: 4px; 
+              -moz-border-radius: 4px; border-radius: 4px;
+              box-shadow: 2px 2px 4px #888; 
+              -moz-box-shadow: 2px 2px 4px #888;
+              -webkit-box-shadow: 2px 2px 4px #888 }
+
+
+
+

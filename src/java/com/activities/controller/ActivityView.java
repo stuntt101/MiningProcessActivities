@@ -5,12 +5,16 @@
  */
 package com.activities.controller;
 
+import com.activities.entities.Activities;
 import com.activities.entities.FocusArea;
+import com.activities.entities.LeadingPractice;
 import com.activities.entities.ProcessActivity;
 import com.activities.entities.SubActivity;
-
+import com.activities.entities.User;
+import com.activities.services.ActivitiesService;
 
 import com.activities.services.FocusAreaService;
+import com.activities.services.LeadingPracticeService;
 import com.activities.services.ProcessActivityService;
 import com.activities.services.SubActivityService;
 
@@ -32,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ActivityView", urlPatterns = {"/ActivityView"})
 public class ActivityView extends HttpServlet {
 
-
     private ActivityServlet aserv = new ActivityServlet();
 
     /**
@@ -51,31 +54,36 @@ public class ActivityView extends HttpServlet {
 
             String action = request.getParameter("action");
             String processActivityName = request.getParameter("processActivityName");
-            String subActivityName1 = request.getParameter("sub_activity_name");
-            
+//            String subActivityName = request.getParameter("sub_activity_name");
 
             FocusAreaService faService = new FocusAreaService();
             SubActivityService saService = new SubActivityService();
             ProcessActivityService paService = new ProcessActivityService();
+            LeadingPracticeService lpService = new LeadingPracticeService();
+            ActivitiesService aService = new ActivitiesService();
+            
+            LeadingPractice leadingPractice  = new LeadingPractice();
             SubActivity subActivity = new SubActivity();
             ProcessActivity processActivity = new ProcessActivity();
             FocusArea focusArea = new FocusArea();
+            Activities activities = new Activities();
+            User user = new User();
 
             if (action.equalsIgnoreCase("addProcessActivity")) {
                 request.getRequestDispatcher("addProcessActivity.jsp").forward(request, response);
             }
 
             if (action.equalsIgnoreCase("viewActivity")) {
-                             String focusAreaname1 = "OHS";
+                String focusAreaname1 = "OHS";
                 String focusAreaname2 = "Cost Reduction";
                 String focusAreaname3 = "Efficiencies";
 //                LeadingPracticeService lpService = new LeadingPracticeService();
-                request.setAttribute("leadingPractices1", saService.getSubActivityByFocusAreaProcessActivity(new FocusArea(focusAreaname1), new ProcessActivity(processActivityName)));
-                request.setAttribute("leadingPractices2", saService.getSubActivityByFocusAreaProcessActivity(new FocusArea(focusAreaname2), new ProcessActivity(processActivityName)));
-                request.setAttribute("leadingPractices3", saService.getSubActivityByFocusAreaProcessActivity(new FocusArea(focusAreaname3), new ProcessActivity(processActivityName)));
-
+                request.setAttribute("leadingPractices1", lpService.getLeadingPracticeByFocusAreaProcessActivity(new FocusArea(focusAreaname1), new ProcessActivity(processActivityName)));
+                request.setAttribute("leadingPractices2", lpService.getLeadingPracticeByFocusAreaProcessActivity(new FocusArea(focusAreaname2), new ProcessActivity(processActivityName)));
+                request.setAttribute("leadingPractices3", lpService.getLeadingPracticeByFocusAreaProcessActivity(new FocusArea(focusAreaname3), new ProcessActivity(processActivityName)));
+                request.setAttribute("activities1", aService.getActivitiesByProcessActivity(new ProcessActivity(processActivityName)));
                 request.setAttribute("processActivityName", processActivityName);
-                request.setAttribute("subActivityName1", saService.getSubActivityByFocusAreaProcessActivity(new FocusArea(focusAreaname3), new ProcessActivity(subActivityName1)));
+                request.setAttribute("OHS", focusAreaname1);
                 request.setAttribute("Cost", focusAreaname2);
                 request.setAttribute("Efficiencies", focusAreaname3);
 
@@ -84,13 +92,15 @@ public class ActivityView extends HttpServlet {
             }
 
             if (action.equalsIgnoreCase("leadingPractices")) {
+                //Integer leadingPracticeId = Integer.parseInt(request.getParameter("leadingPracticeId"));
+                //request.setAttribute("testing", lpService.findLeadingPracticeById(leadingPracticeId));
                 String focusAreaname1 = "OHS";
                 String focusAreaname2 = "Cost Reduction";
                 String focusAreaname3 = "Efficiencies";
 //                LeadingPracticeService lpService = new LeadingPracticeService();
-                request.setAttribute("leadingPractices1", saService.getSubActivityByFocusAreaProcessActivity(new FocusArea(focusAreaname1), new ProcessActivity(processActivityName)));
-                request.setAttribute("leadingPractices2", saService.getSubActivityByFocusAreaProcessActivity(new FocusArea(focusAreaname2), new ProcessActivity(processActivityName)));
-                request.setAttribute("leadingPractices3", saService.getSubActivityByFocusAreaProcessActivity(new FocusArea(focusAreaname3), new ProcessActivity(processActivityName)));
+                request.setAttribute("leadingPractices1", lpService.getLeadingPracticeByFocusAreaProcessActivity(new FocusArea(focusAreaname1), new ProcessActivity(processActivityName)));
+                request.setAttribute("leadingPractices2", lpService.getLeadingPracticeByFocusAreaProcessActivity(new FocusArea(focusAreaname2), new ProcessActivity(processActivityName)));
+                request.setAttribute("leadingPractices3", lpService.getLeadingPracticeByFocusAreaProcessActivity(new FocusArea(focusAreaname3), new ProcessActivity(processActivityName)));
 
                 request.setAttribute("processActivityName", processActivityName);
                 request.setAttribute("processActivityName", processActivityName);
@@ -101,33 +111,35 @@ public class ActivityView extends HttpServlet {
                 request.getRequestDispatcher("addProcessActivity.jsp").forward(request, response);
             }
 
-            if (action.equalsIgnoreCase("addSubActivity")) {
-                
-                String paName = request.getParameter("process_activity_name");
+            if (action.equalsIgnoreCase("addLeadingPractice")) {
                 String focusAreaName = request.getParameter("focus_area_name");
+                String paName = request.getParameter("process_activity_name");
                 String subActivityName = request.getParameter("sub_activity_name");
                 String issues = request.getParameter("issues");
                 String solutions = request.getParameter("solutions");
+                String added_by = request.getParameter("added_by");
 
                 focusArea.setFocusAreaName(focusAreaName);
                 processActivity.setProcessActivityName(paName);
-
                 subActivity.setSubActivityName(subActivityName);
-                subActivity.setProcessActivityName(processActivity);
-                subActivity.setFocusAreaName(focusArea);
-                subActivity.setIssues(issues);
-                subActivity.setSolutions(solutions);
-
-                boolean result = saService.addSubActivity(subActivity);
+                user.setUsername(added_by);
+                leadingPractice.setLeadingPracticeId(Integer.SIZE);
+                leadingPractice.setFocusAreaName(focusArea);
+                leadingPractice.setSubActivityName(subActivity);
+                leadingPractice.setProcessActivityName(processActivity);
+                leadingPractice.setIssues(issues);
+                leadingPractice.setSolutions(solutions);
+                leadingPractice.setAddedBy(user);
+                boolean result = lpService.addLeadingPractice(leadingPractice);
                 if (result) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('sub activity sucessfully added.');");
-                    out.println("location='index.jsp';");
+                    out.println("location='process_activity.jsp';");
                     out.println("</script>");
                 } else {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Leading practice already exists');");
-                    out.println("location='index.jsp';");
+                    out.println("location='process_activity.jsp';");
                     out.println("</script>");
                 }
 

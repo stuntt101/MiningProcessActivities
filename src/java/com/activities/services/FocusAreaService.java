@@ -72,7 +72,7 @@ public class FocusAreaService {
         try {
             tx = session.getTransaction();
             tx.begin();
-            Query query = session.createQuery("from FocusArea where fousAreaName='" + focusArea.getFocusAreaName()+ "'");
+            Query query = session.createQuery("from FocusArea where focusAreaName='" + focusArea.getFocusAreaName()+ "'");
             FocusArea mt = (FocusArea) query.uniqueResult();
             tx.commit();
             if (mt != null) {

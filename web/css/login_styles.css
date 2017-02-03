@@ -1,0 +1,14 @@
+#header-wrap {
+    /*background: #eeeeff;*/
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    top: 0;
+    z-index: 1;
+}
+#header { height:89px; background:#004a8d; white-space:nowrap; }
+#footer { height:44px; background:#004a8d; line-height:44px; 
+          bottom:0;position: fixed;z-index: 1; width:100%; color: #fff;}
+.box { background:#fbfcfc; height:100%; padding:1px; margin-bottom:20px;  }
+.box-head { background:#255625; height:32px; color:#fff; padding: 0 10px; line-height:32px; white-space:nowrap; border-bottom:solid 1px #fff; }
+button { text-align: right; padding:5px 5px; background:#255625;  border-radius: 5px;}

@@ -12,6 +12,14 @@
         <servlet-name>AddNewSubActivity</servlet-name>
         <servlet-class>com.activities.controller.AddNewSubActivity</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.activities.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterUser</servlet-name>
+        <servlet-class>com.activities.controller.RegisterUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActivityView</servlet-name>
         <url-pattern>/ActivityView</url-pattern>
@@ -24,12 +32,20 @@
         <servlet-name>AddNewSubActivity</servlet-name>
         <url-pattern>/AddNewSubActivity</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterUser</servlet-name>
+        <url-pattern>/RegisterUser</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

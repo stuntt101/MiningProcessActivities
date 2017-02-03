@@ -28,7 +28,7 @@ background-color:#123456;
 box-shadow:1px 1px 5px grey;
 border-radius:3px;
 }*/
-#onclick{
+#onclick,#onclick_2,#onclick_3,#onclick_pa{
     padding:3px;
     color:green;
     cursor:pointer;
@@ -39,6 +39,7 @@ border-radius:3px;
     /*box-shadow:1px 1px 5px grey;*/
     border-radius:3px;
 }
+
 b{
     font-size:18px;
     text-shadow:1px 0px 3px gray;
@@ -46,7 +47,7 @@ b{
 #popup{
     padding-top:80px;
 }
-.form{
+.form, .form_pa{
     border-radius:2px;
     padding:20px 30px;
     box-shadow:0 0 15px;
@@ -83,7 +84,6 @@ input[type=submit]{
     width:49%;
 }
 select{
-    width:100%;
     height:35px;
     margin-top:5px;
     border:1px solid #999;
@@ -98,7 +98,7 @@ textarea{
     padding:5px;
     resize:none;
 }
-#contactdiv{
+#contactdiv, #contactdiv_pa{
     opacity:0.92;
     position: absolute;
     top: 0px;
@@ -107,6 +107,7 @@ textarea{
     width: 100%;
     background: #000;
     display: none;
+    z-index: 1;
 }
 #logindiv{
     opacity:0.92;
@@ -119,7 +120,7 @@ textarea{
     display: none;
 }
 
-#login,#contact{
+#login,#contact,#contact_pa{
     width:350px;
     margin:0px;
     background-color:white;
@@ -127,12 +128,12 @@ textarea{
     position: relative;
     border: 5px solid rgb(90, 158, 181);
 }
-.img{
+.img, .img_pa{
     float: right;
     margin-top: -35px;
     margin-right: -37px;
 }
-#contact{
+#contact, #contact_pa{
     left: 60%;
     top: 50%;
     margin-left: -210px;

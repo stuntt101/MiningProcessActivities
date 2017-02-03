@@ -41,7 +41,9 @@ public class ProcessActivity implements Serializable {
     @Column(name = "process_activity_name")
     private String processActivityName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "processActivityName")
-    private List<SubActivity> subActivityList;
+    private List<LeadingPractice> leadingPracticeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "processActivityName")
+    private List<Activities> activitiesList;
 
     public ProcessActivity() {
     }
@@ -59,12 +61,12 @@ public class ProcessActivity implements Serializable {
     }
 
     @XmlTransient
-    public List<SubActivity> getSubActivityList() {
-        return subActivityList;
+    public List<Activities> getActivitiesList() {
+        return activitiesList;
     }
 
-    public void setSubActivityList(List<SubActivity> subActivityList) {
-        this.subActivityList = subActivityList;
+    public void setActivitiesList(List<Activities> activitiesList) {
+        this.activitiesList = activitiesList;
     }
 
     @Override
