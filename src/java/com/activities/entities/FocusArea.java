@@ -8,6 +8,7 @@ package com.activities.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,6 +32,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "FocusArea.findAll", query = "SELECT f FROM FocusArea f"),
     @NamedQuery(name = "FocusArea.findByFocusAreaName", query = "SELECT f FROM FocusArea f WHERE f.focusAreaName = :focusAreaName")})
 public class FocusArea implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "focusAreaName")
+    private List<LeadingPractice> leadingPracticeList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -89,6 +93,15 @@ public class FocusArea implements Serializable {
     @Override
     public String toString() {
         return "com.activities.entities.FocusArea[ focusAreaName=" + focusAreaName + " ]";
+    }
+
+    @XmlTransient
+    public List<LeadingPractice> getLeadingPracticeList() {
+        return leadingPracticeList;
+    }
+
+    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
+        this.leadingPracticeList = leadingPracticeList;
     }
     
 }

@@ -6,16 +6,20 @@
 package com.activities.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -56,20 +60,13 @@ public class SubActivity implements Serializable {
         this.subActivityName = subActivityName;
     }
 
-    public String getIssues() {
-        return issues;
+    @XmlTransient
+    public List<LeadingPractice> getLeadingPracticeList() {
+        return leadingPracticeList;
     }
 
-    public void setIssues(String issues) {
-        this.issues = issues;
-    }
-
-    public String getSolutions() {
-        return solutions;
-    }
-
-    public void setSolutions(String solutions) {
-        this.solutions = solutions;
+    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
+        this.leadingPracticeList = leadingPracticeList;
     }
 
     @XmlTransient
@@ -79,14 +76,6 @@ public class SubActivity implements Serializable {
 
     public void setActivitiesList(List<Activities> activitiesList) {
         this.activitiesList = activitiesList;
-    }
-
-    public FocusArea getFocusAreaName() {
-        return focusAreaName;
-    }
-
-    public void setFocusAreaName(FocusArea focusAreaName) {
-        this.focusAreaName = focusAreaName;
     }
 
     @Override

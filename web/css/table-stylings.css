@@ -1,0 +1,119 @@
+.main_table {
+/*            border: 1px solid white;
+            border-collapse: collapse;
+            width:100%;
+      
+            table-layout: fixed;
+               overflow-y: scroll;
+            display: inline;    
+            height: 120px;
+           */
+
+
+}
+
+.main_table .main_th {
+    border: 1px solid black;
+    color: #ffffff;
+    background-color: #255625;
+/*    white-space: normal;
+    width: 40%;
+    max-width: 300px;*/
+}
+.main_table th{
+    
+}
+.child_table {
+    /*width: 100%;*/
+    position: initial;
+    top: 0;
+    border: 1px;
+
+
+
+}
+.child_table th {
+top: 0;
+/* width: 40%;
+    max-width: 300px;*/
+
+}
+.child_table .child_td {
+top: 0;
+border: 1px solid black;
+
+}
+
+.main_table th {
+    border: 1px solid white;
+    text-align:justify;
+    padding: 0.6em;
+
+}
+
+.main_table .main_th{
+    /*width: 70%;*/
+}
+.main_table .main_td{
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid white;
+}
+
+caption{
+    padding: 1.0em;
+}
+td:first-child,
+th:first-child{
+    border: 1;
+}
+tbody tr:nth-child(even) td{
+    background: #f7f7f7;
+
+}
+table td.shrink {
+    white-space:nowrap
+
+}
+table td.expand {
+    width: 99%
+}
+table th.shrink {
+    white-space:nowrap
+}
+table th.expand {
+    width: 99%
+}
+
+.outerDIV {
+    position: relative;
+    padding-top: 30px;
+}
+.innerDIV {
+    overflow: auto;
+    max-height: 600px;
+}
+table td{
+    width:100px;
+    height:20px;
+    background:#cccccc;
+}
+
+#top{
+    float: right;
+}
+input, textarea{
+    width:100%;
+    height:35px;
+    margin-top:5px;
+    border:1px solid #999;
+    border-radius:3px;
+    padding:5px;
+}
+tr .child_td{
+/*    white-space: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+    width:auto;*/
+   
+}
