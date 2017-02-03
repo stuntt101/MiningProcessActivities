@@ -61,15 +61,6 @@ public class ProcessActivity implements Serializable {
     }
 
     @XmlTransient
-    public List<LeadingPractice> getLeadingPracticeList() {
-        return leadingPracticeList;
-    }
-
-    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
-        this.leadingPracticeList = leadingPracticeList;
-    }
-
-    @XmlTransient
     public List<Activities> getActivitiesList() {
         return activitiesList;
     }

@@ -100,13 +100,13 @@
                         <tbody>
 
                             <tr>
-                                <td>Focus area</td>
+                                <td>Process activity</td>
                                 <td>
                                     <input type="text" name="focus_area_name" id="focus_area_name" value="${focusArea}" readonly/>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Process activity</td>
+                                <td>Focus area</td>
                                 <td>
                                     <input type="text" name="process_activity_name" id="process_activity_name" value="${processActivity}" readonly/>
                                 </td>
@@ -136,7 +136,7 @@
                             </tr>
                         </tbody>
                     </table>
-
+            <%}%>
                 </fieldset>
             </center>
 
