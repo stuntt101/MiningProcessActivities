@@ -11,11 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,45 +30,26 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SubActivity.findAll", query = "SELECT s FROM SubActivity s"),
-    @NamedQuery(name = "SubActivity.findBySubActivityId", query = "SELECT s FROM SubActivity s WHERE s.subActivityId = :subActivityId"),
     @NamedQuery(name = "SubActivity.findBySubActivityName", query = "SELECT s FROM SubActivity s WHERE s.subActivityName = :subActivityName")})
 public class SubActivity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "sub_activity_id")
-    private Integer subActivityId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "sub_activity_name")
     private String subActivityName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subActivityId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subActivityName")
     private List<LeadingPractice> leadingPracticeList;
-    @JoinColumn(name = "process_activity_name", referencedColumnName = "process_activity_name")
-    @ManyToOne(optional = false)
-    private ProcessActivity processActivityName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subActivityName")
+    private List<Activities> activitiesList;
 
     public SubActivity() {
     }
 
-    public SubActivity(Integer subActivityId) {
-        this.subActivityId = subActivityId;
-    }
-
-    public SubActivity(Integer subActivityId, String subActivityName) {
-        this.subActivityId = subActivityId;
+    public SubActivity(String subActivityName) {
         this.subActivityName = subActivityName;
-    }
-
-    public Integer getSubActivityId() {
-        return subActivityId;
-    }
-
-    public void setSubActivityId(Integer subActivityId) {
-        this.subActivityId = subActivityId;
     }
 
     public String getSubActivityName() {
@@ -92,18 +69,19 @@ public class SubActivity implements Serializable {
         this.leadingPracticeList = leadingPracticeList;
     }
 
-    public ProcessActivity getProcessActivityName() {
-        return processActivityName;
+    @XmlTransient
+    public List<Activities> getActivitiesList() {
+        return activitiesList;
     }
 
-    public void setProcessActivityName(ProcessActivity processActivityName) {
-        this.processActivityName = processActivityName;
+    public void setActivitiesList(List<Activities> activitiesList) {
+        this.activitiesList = activitiesList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (subActivityId != null ? subActivityId.hashCode() : 0);
+        hash += (subActivityName != null ? subActivityName.hashCode() : 0);
         return hash;
     }
 
@@ -114,7 +92,7 @@ public class SubActivity implements Serializable {
             return false;
         }
         SubActivity other = (SubActivity) object;
-        if ((this.subActivityId == null && other.subActivityId != null) || (this.subActivityId != null && !this.subActivityId.equals(other.subActivityId))) {
+        if ((this.subActivityName == null && other.subActivityName != null) || (this.subActivityName != null && !this.subActivityName.equals(other.subActivityName))) {
             return false;
         }
         return true;
@@ -122,7 +100,7 @@ public class SubActivity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.activities.entities.SubActivity[ subActivityId=" + subActivityId + " ]";
+        return "com.activities.entities.SubActivity[ subActivityName=" + subActivityName + " ]";
     }
     
 }

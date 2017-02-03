@@ -43,17 +43,20 @@ public class LeadingPractice implements Serializable {
     private Integer leadingPracticeId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 5000)
+    @Size(min = 1, max = 100)
     @Column(name = "issues")
     private String issues;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 5000)
+    @Size(min = 1, max = 100)
     @Column(name = "solutions")
     private String solutions;
-    @JoinColumn(name = "sub_activity_id", referencedColumnName = "sub_activity_id")
+    @JoinColumn(name = "added_by", referencedColumnName = "username")
+    @ManyToOne
+    private User addedBy;
+    @JoinColumn(name = "sub_activity_name", referencedColumnName = "sub_activity_name")
     @ManyToOne(optional = false)
-    private SubActivity subActivityId;
+    private SubActivity subActivityName;
     @JoinColumn(name = "process_activity_name", referencedColumnName = "process_activity_name")
     @ManyToOne(optional = false)
     private ProcessActivity processActivityName;
@@ -98,12 +101,20 @@ public class LeadingPractice implements Serializable {
         this.solutions = solutions;
     }
 
-    public SubActivity getSubActivityId() {
-        return subActivityId;
+    public User getAddedBy() {
+        return addedBy;
     }
 
-    public void setSubActivityId(SubActivity subActivityId) {
-        this.subActivityId = subActivityId;
+    public void setAddedBy(User addedBy) {
+        this.addedBy = addedBy;
+    }
+
+    public SubActivity getSubActivityName() {
+        return subActivityName;
+    }
+
+    public void setSubActivityName(SubActivity subActivityName) {
+        this.subActivityName = subActivityName;
     }
 
     public ProcessActivity getProcessActivityName() {

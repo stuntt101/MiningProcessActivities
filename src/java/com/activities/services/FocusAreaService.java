@@ -6,7 +6,6 @@
 package com.activities.services;
 
 import com.activities.entities.FocusArea;
-import com.activities.entities.LeadingPractice;
 import com.activities.entities.ProcessActivity;
 import com.activities.hibernate.util.HibernateUtil;
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public class FocusAreaService {
         try {
             tx = session.getTransaction();
             tx.begin();
-            Query query = session.createQuery("from FocusArea where fousAreaName='" + focusArea.getFocusAreaName()+ "'");
+            Query query = session.createQuery("from FocusArea where focusAreaName='" + focusArea.getFocusAreaName()+ "'");
             FocusArea mt = (FocusArea) query.uniqueResult();
             tx.commit();
             if (mt != null) {

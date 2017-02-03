@@ -5,9 +5,11 @@
  */
 package com.activities.controller;
 
+import com.activities.entities.Activities;
+import com.activities.entities.FocusArea;
 import com.activities.entities.ProcessActivity;
 import com.activities.entities.SubActivity;
-import com.activities.entitiesBean.ProcessActivityControlLocal;
+import com.activities.services.ActivitiesService;
 import com.activities.services.ProcessActivityService;
 import com.activities.services.SubActivityService;
 import java.io.IOException;
@@ -25,9 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AddNewSubActivity extends HttpServlet {
 
     private ActivityServlet aserv = new ActivityServlet();
-
-    @EJB
-    private ProcessActivityControlLocal pacl;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,28 +46,59 @@ public class AddNewSubActivity extends HttpServlet {
             ProcessActivityService paService = new ProcessActivityService();
             SubActivity subActivity = new SubActivity();
             ProcessActivity processActivity = new ProcessActivity();
+            FocusArea focusArea = new FocusArea();
+            Activities activities = new Activities();
+            ActivitiesService aService = new ActivitiesService();
 
             if (action.equalsIgnoreCase("addSubActivity")) {
+                String SubActivityName = request.getParameter("sub_activity_name");
+                subActivity.setSubActivityName(SubActivityName);
+                boolean res = saService.addSubActivity(subActivity);
+                if (res) {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Process activity added');");
+                    out.println("location='process_activity.jsp';");
+                    out.println("</script>");
+                } else {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Process activity already exists');");
+                    out.println("location='process_activity.jsp';");
+                    out.println("</script>");
+                }
+
+            }
+
+            if (action.equalsIgnoreCase("addActivities")) {
 
                 String processActivityName = request.getParameter("process_activity_name");
                 String SubActivityName = request.getParameter("sub_activity_name");
 
                 processActivity.setProcessActivityName(processActivityName);
-                subActivity.setSubActivityId(Integer.SIZE);
-                subActivity.setProcessActivityName(processActivity);
                 subActivity.setSubActivityName(SubActivityName);
+                saService.addSubActivity(subActivity);
+                activities.setActivitiesId(Integer.SIZE);
+                activities.setProcessActivityName(processActivity);
+                activities.setSubActivityName(subActivity);
 
-                boolean result = saService.addSubActivity(subActivity);
-                if (result) {
+            
+                if (aService.getActivitiesBySubActivityName(processActivity, subActivity).size()>0) {
                     out.println("<script type=\"text/javascript\">");
-                    out.println("alert('New sub activity sucessfully added.');");
-                    out.println("location='stopping.jsp';");
+                    out.println("alert('Nope.');");
+                    out.println("location='process_activity.jsp';");
                     out.println("</script>");
                 } else {
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("alert('Sub activity already exists.');");
-                    out.println("location='stopping.jsp';");
-                    out.println("</script>");
+                    boolean result = aService.addActivities(activities);
+                    if (result) {
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('New activity sucessfully added.');");
+                        out.println("location='process_activity.jsp';");
+                        out.println("</script>");
+                    } else {
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('Activity already exists.');");
+                        out.println("location='process_activity.jsp';");
+                        out.println("</script>");
+                    }
                 }
             }
             if (action.equalsIgnoreCase("addProcessActivity")) {
@@ -79,18 +109,19 @@ public class AddNewSubActivity extends HttpServlet {
                 if (res) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Process activity added');");
-                    out.println("location='index.jsp';");
+                    out.println("location='process_activity.jsp';");
                     out.println("</script>");
                 } else {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Process activity already exists');");
-                    out.println("location='index.jsp';");
+                    out.println("location='process_activity.jsp';");
                     out.println("</script>");
                 }
 
             }
         }
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
