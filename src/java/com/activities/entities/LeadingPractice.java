@@ -43,12 +43,12 @@ public class LeadingPractice implements Serializable {
     private Integer leadingPracticeId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 500)
     @Column(name = "issues")
     private String issues;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 500)
     @Column(name = "solutions")
     private String solutions;
     @JoinColumn(name = "added_by", referencedColumnName = "username")

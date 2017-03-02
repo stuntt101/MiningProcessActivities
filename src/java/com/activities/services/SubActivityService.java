@@ -5,7 +5,6 @@
  */
 package com.activities.services;
 
-import com.activities.entities.FocusArea;
 import com.activities.entities.ProcessActivity;
 import com.activities.entities.SubActivity;
 import com.activities.hibernate.util.HibernateUtil;

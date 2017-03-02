@@ -9,9 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" href="images/favicon-32x32_logo.png" type="image/png" sizes="32x32">
         <!--<link rel="stylesheet" type="text/css" href="css/styles.css"/>-->
         <link rel="stylesheet" href="css/login_styles.css" type="text/css" media="all" />
-        <title>JSP Page</title>
+        <title>Login</title>
 
         <style>
             label {
@@ -45,8 +46,8 @@
                         <td>
                     <center> </center></td>
 
-                    <td style="vertical-align: bottom; text-align: center; width: 47%; color: #fff;"> <b> <h2><strong>Mining Activities Feedback Form</strong></h2></b> 
-                    </td>
+                     <td style="background-color: #004a8d; color: white;">
+                    <center> <b> <h2 style="float: left;"><strong>Mining Activities Feedback Form</strong></h2></b> </center></td>
                     </tr>
 
                 </table>
@@ -58,6 +59,7 @@
         <p>&nbsp;</p>
 
         <p>&nbsp;</p>
+                <p>&nbsp;</p>
 
 
 

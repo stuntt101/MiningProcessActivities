@@ -9,6 +9,7 @@
     <property name="hibernate.connection.password">13579</property>
     <mapping class="com.activities.entities.Activities"/>
     <mapping class="com.activities.entities.FocusArea"/>
+    <mapping class="com.activities.entities.LeadingPractice"/>
     <mapping class="com.activities.entities.ProcessActivity"/>
     <mapping class="com.activities.entities.SubActivity"/>
     <mapping class="com.activities.entities.User"/>

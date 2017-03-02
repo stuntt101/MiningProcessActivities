@@ -133,12 +133,12 @@ public class ActivityView extends HttpServlet {
                 boolean result = lpService.addLeadingPractice(leadingPractice);
                 if (result) {
                     out.println("<script type=\"text/javascript\">");
-                    out.println("alert('sub activity sucessfully added.');");
+                    out.println("alert('New Leading Practice sucessfully sdded.');");
                     out.println("location='process_activity.jsp';");
                     out.println("</script>");
                 } else {
                     out.println("<script type=\"text/javascript\">");
-                    out.println("alert('Leading practice already exists');");
+                    out.println("alert('Leading Practice already exists');");
                     out.println("location='process_activity.jsp';");
                     out.println("</script>");
                 }

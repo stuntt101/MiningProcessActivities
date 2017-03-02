@@ -16,6 +16,7 @@
         <title>admin home</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="images/favicon-32x32_logo.png" type="image/png" sizes="32x32">
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
         <!--                <script type="text/javascript" src="bootstrap.min.js"></script>
@@ -198,8 +199,8 @@
             <br>
             <fieldset class="formFieldset">
                 <legend class="formLegend"><b>Activities</b></legend>
-                <div class="outerDIV">
-                    <div class="innerDIV">
+                <div class="side_outerDIV">
+                    <div class="side_innerDIV">
                         <table>
                             <thead>
                                 <tr>

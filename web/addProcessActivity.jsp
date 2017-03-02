@@ -16,20 +16,100 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" href="images/favicon-32x32_logo.png" type="image/png" sizes="32x32">
+
         <link rel="stylesheet" type="text/css" href="css/styles.css"/>
         <link rel="stylesheet" type="text/css" media="screen" href="css/form-stylings.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <script src="js/bootstrap.min.js"></script>
 
-        <title>JSP Page</title>
+        <title>Add Process Activity</title>
         <style type="text/css">
-            input, textarea{
-                width:100%;
-                height:35px;
-                margin-top:5px;
-                border:1px solid #999;
-                border-radius:3px;
-                padding:5px;
+             /* The Modal (background) */
+            .modal {
+                display: block; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 80px; /* Location of the box */
+                left: 0;
+                top: 10;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+/*                background-color: rgb(0,0,0);  Fallback color 
+                background-color: rgba(0,0,0,0.4);  Black w/ opacity */
             }
 
+            /* Modal Content */
+            .modal-content {
+                position: relative;
+                background-color: #fefefe;
+                margin: auto;
+                padding: 0;
+                border: 1px solid #888;
+                width: 50%;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+                -webkit-animation-name: animatetop;
+                -webkit-animation-duration: 0.4s;
+                animation-name: animatetop;
+                animation-duration: 0.4s
+            }
+
+            /* Add Animation */
+            @-webkit-keyframes animatetop {
+                from {top:-300px; opacity:0}
+                to {top:0; opacity:1}
+            }
+
+            @keyframes animatetop {
+                from {top:-300px; opacity:0}
+                to {top:0; opacity:1}
+            }
+
+            /* The Close Button */
+            .close {
+                color: white;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .modal-header {
+                padding: 2px 12px;
+                background-color: #004a8d;
+                color: white;
+
+            }
+            .btn-primary-spacing 
+{
+margin-right: 5px;
+margin-bottom: 5px !important;
+}
+
+            .modal-body {padding: 2px 16px;}
+
+            .modal-footer {
+                padding: 2px 16px;
+                background-color:#004a8d;
+                color: white;
+            }
+            .btn-space {
+    margin-right: 5px;
+}
+.btn-toolbar .btn{
+    margin-right: 5px;
+}
+.btn-toolbar .btn:last-child{
+    margin-right: 0;
+}
 
 
         </style>
@@ -40,6 +120,17 @@
                 document.getElementById("sub_activity_name").value = fields[2];
             }
         </script>
+         <script>
+                    
+                   var Cancel_sbmt = document.getElementById("Cancel_sbmt");
+                     // When the user clicks the Cancel button, redirect to the previous page
+                    Cancel_sbmt.onclick = function (event) {
+                        event.preventDefault();
+                        window.location.href="process_activity.jsp";
+                        
+                    }
+                  
+                </script>
     </head>
     <body>
         <%
@@ -71,7 +162,7 @@
 
 
         %>
-               <div id="header">
+        <div id="header">
             <div id="header-wrap">
                 <table width="100%" height="40%" border="0" style="background-color: #004a8d; top: 0;">
                     <tr align=”left”>
@@ -90,64 +181,85 @@
         <br>
         <br>
         <br>
-        <form class="form"  id="contact" action="ActivityView" method="POST" >
 
-            <center>
-                <fieldset class="formFieldset"><legend class="formLegend"><b>Add Leading practice issues and solutions</b></legend>
+          <div id="myModal" class="modal">
 
-                    <table cellpading="7" cellspacing="7">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p><center>Add New Leading Practice</center></p>
+                    </div>
+                   &nbsp;
+                    <center>
+                        <div class="modal-body">
+                            <center>
+                                <div id="bootstrap">
+                                    <form   action="ActivityView" method="POST" class="form-horizontal">
+                                     <input type="hidden" name="added_by" id="added_by" value="${username}" readonly/>
 
-                        <tbody>
+                          
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="focus_area_name">Focus Area:</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control"name="focus_area_name" id="focus_area_name" value="${focusArea}" readonly>
+                                            </div>
+                                        </div>
+                                     <div class="form-group">
+                                            <label class="control-label col-sm-4" for="process_activity_name">Process Activity:</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="process_activity_name" name="process_activity_name" value="${processActivity}" readonly >
+                                            </div>
+                                        </div>
+                                     <div class="form-group">
+                                            <label class="control-label col-sm-4" for="sub_activity_name">Sub Activity:</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" name="sub_activity_name" id="sub_activity_name" value="${subActivity}" readonly>
+                                            </div>
+                                        </div>
+                                     <div class="form-group">
+                                            <label class="control-label col-sm-4" for="issues">Issues:</label>
+                                            <div class="col-sm-5">
+                                                <textarea type="text" class="form-control" id="issues" name="issues"  required></textarea>
+                                            </div>
+                                        </div>
+                                            <div class="form-group">
+                                            <label class="control-label col-sm-4" for="issues">Solutions:</label>
+                                            <div class="col-sm-5">
+                                                <textarea type="text" class="form-control" id="solutions" name="solutions" required></textarea>
+                                            </div>
+                                        </div>
+                                     
+                                        <div class="row">        
+                                            <div class="col-sm-offset-4 col-sm-8" >
+                                                <button type="submit" name="action" value="addLeadingPractice" class="btn btn-primary btn-xs col-lg-3 btn-space"style="margin-right: 35px;">Save</button>&nbsp;&nbsp;<button type="" id="Cancel_sbmt" class="btn btn-default btn-xs col-lg-3 btn-space" style="margin-right: 7px;">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </center>
 
-                            <tr>
-                                <td>Process activity</td>
-                                <td>
-                                    <input type="text" name="focus_area_name" id="focus_area_name" value="${focusArea}" readonly/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Focus area</td>
-                                <td>
-                                    <input type="text" name="process_activity_name" id="process_activity_name" value="${processActivity}" readonly/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sub activity</td>
-                                <td>
-                                    <input type="text" name="sub_activity_name" id="sub_activity_name" value="${subActivity}" readonly/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Issues</td>
-                                <td><textarea name="issues" required=""></textarea></td>
-                            </tr>
-                            <tr>
-                                <td>Solutions</td>
-                                <td>
-                                    <textarea name="solutions" required=""></textarea>
-                                    <input type="hidden" name="added_by" id="added_by" value="${username}" readonly/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>  </td>
-                                <td>
-                                    <button type="submit" id="send" name="action" value="addLeadingPractice">Add Leading Practice</button> 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-            <%}%>
-                </fieldset>
-            </center>
+                            <br>
 
+                        </div>
+                    </center>
 
-
-
-            <br/>
-        </form>
+                </div>
+            </div>
+                <script>
+                   var Cancel_sbmt = document.getElementById("Cancel_sbmt");
+                     // When the user clicks the Cancel button, redirect to the previous page
+                    Cancel_sbmt.onclick = function (event) {
+                        event.preventDefault();
+                        window.location.href="ActivityView?action=viewActivity&processActivityName=${processActivity}";
+                        
+                    } 
+                </script>
+                
+<!--       <button style="float:bottom;" onclick="location.href = 'process_activity.jsp'" >Back</button>-->
         <div id="footer">
             <div class="shell" style="text-align: center;"> <span class="center">Copyright &copy; CSIR 2017. All Rights Reserved.</span> <span class="right"></span> </div>
 
         </div>
+        
     </body>
 </html>

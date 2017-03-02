@@ -24,6 +24,27 @@
         <title>View Process Activities</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="images/favicon-32x32_logo.png" type="image/png" sizes="32x32">
+        <script type="text/javascript" src="testJs/jquery-1.12.4.js"></script>
+        <script type="text/javascript" src="testJs/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="testJs/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="testJs/buttons.flash.min.js"></script>
+        <script type="text/javascript" src="testJs/jszip.min.js"></script>
+        <script type="text/javascript" src="testJs/pdfmake.min.js"></script>
+        <script type="text/javascript" src="testJs/vfs_fonts.js"></script>
+        <script type="text/javascript" src="testJs/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="testJs/buttons.print.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <script src="js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/buttons.dataTables.min.css"/>
+        <!--        <link rel="stylesheet" type="text/css" href="css/style.css"/>-->
+
+
+
+
         <!--                <script type="text/javascript" src="bootstrap.min.js"></script>
                         <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>-->
         <!--<link rel="stylesheet" type="text/css" href="table-stylings.css"/>-->
@@ -47,6 +68,16 @@
         <script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
         <script type="text/javascript" src="js/style-table.js"></script>
 
+        <script type="text/javascript" class="init">
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+        </script>
 
         <script type="text/javascript">
 
@@ -204,9 +235,95 @@
                 text-align: center;
                 vertical-align: middle;
             }
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 80px; /* Location of the box */
+                left: 0;
+                top: 10;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+               background-color: rgb(0,0,0);  /*Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
 
+            /* Modal Content */
+            .modal-content {
+                position: relative;
+                background-color: #fefefe;
+                margin: auto;
+                padding: 0;
+                border: 1px solid #888;
+                width: 50%;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+                -webkit-animation-name: animatetop;
+                -webkit-animation-duration: 0.4s;
+                animation-name: animatetop;
+                animation-duration: 0.4s
+            }
 
+            /* Add Animation */
+            @-webkit-keyframes animatetop {
+                from {top:-300px; opacity:0}
+                to {top:0; opacity:1}
+            }
+
+            @keyframes animatetop {
+                from {top:-300px; opacity:0}
+                to {top:0; opacity:1}
+            }
+
+            /* The Close Button */
+            .close {
+                color: white;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .modal-header {
+                padding: 2px 12px;
+                background-color: #004a8d;
+                color: white;
+
+            }
+            .btn-primary-spacing 
+{
+margin-right: 5px;
+margin-bottom: 5px !important;
+}
+
+            .modal-body {padding: 2px 16px;}
+
+            .modal-footer {
+                padding: 2px 16px;
+                background-color:#004a8d;
+                color: white;
+            }
+            .btn-space {
+    margin-right: 5px;
+}
+.btn-toolbar .btn{
+    margin-right: 5px;
+}
+.btn-toolbar .btn:last-child{
+    margin-right: 0;
+}
         </style>
+
+
+
+
 
     </head>
     <body>
@@ -262,7 +379,9 @@
         <br>
         <br>
         <div class="left">
+
             <div id="contactdiv_pa">
+
                 <form class="form_pa"  id="contact_pa" action="AddNewSubActivity" method="POST" >
                     <img src="images/button_cancel.png" class="img_pa" id="cancel_pa"/>
                     <h3>Add new process activity</h3>
@@ -276,12 +395,91 @@
                     <br/>
                 </form>
             </div>
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">×</span>
+                        <p><center>New Process Activity</center></p>
+                    </div>
+                   &nbsp;
+                    <center>
+                        <div class="modal-body">
+                            <center>
+                                <div id="bootstrap">
+                                    <form   action="AddNewSubActivity" method="POST" class="form-horizontal">
+                          
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" for="process_activity_name">Process Activity:</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="process_activity_name" name="process_activity_name" placeholder="Enter Process Activity" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">        
+                                            <div class="col-sm-offset-4 col-sm-8" >
+                                                <button type="submit" name="action" value="addProcessActivity" class="btn btn-primary btn-xs col-lg-3 btn-space"style="margin-right: 35px;">Save</button>&nbsp;&nbsp;<button type="" id="Cancel_sbmt" class="btn btn-primary btn-xs col-lg-3 btn-space" style="margin-right: 7px;">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </center>
+
+                            <br>
+
+                        </div>
+                    </center>
+
+                </div>
+            </div>
+
             <br>
-            <fieldset class="formFieldset">
+            <fieldset class="left_formFieldset">
+                &nbsp;
                 <legend class="formLegend"><b>Activities</b></legend>
-                <div class="outerDIV">
-                    <div class="innerDIV">
-                        <table>
+                <div id="bootstrap">
+                    <button  class="btn btn-primary btn-xs " id="myBtn" title="Add a new process activity">
+                        <i class="glyphicon glyphicon-plus"></i> <strong>Add New</strong>
+                    </button>   
+                </div>
+                <script>
+                    // Get the modal
+                    var modal = document.getElementById('myModal');
+
+                    // Get the button that opens the modal
+                    var btn = document.getElementById("myBtn");
+                   var Cancel_sbmt = document.getElementById("Cancel_sbmt");
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks the button, open the modal
+                    btn.onclick = function () {
+                        modal.style.display = "block";
+                    }
+                     // When the user clicks the Cancel button, close the modal
+                    Cancel_sbmt.onclick = function (event) {
+                        event.preventDefault();
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                </script>
+
+
+                <div class="side_outerDIV">
+                    <div class="side_innerDIV">
+                        <table id="measurements" >
                             <thead>
                                 <tr>
                                     <th></th>
@@ -293,11 +491,7 @@
                                         <td><button onclick="location.href = 'ActivityView?action=viewActivity&processActivityName=${pa.processActivityName}'" >${pa.processActivityName}</button></td>
                                     </tr>
                                 </c:forEach>                                                           
-                                <tr>
-                                    <td>
-                                        <img src="images/add_new_tab.png" width="25" height="25" id="onclick_pa" title="Add a new process activity" />
-                                    </td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -306,224 +500,240 @@
         </div>
         <br>
 
+
+
         <div class="center">
-            <fieldset >
-              
-                <div id="contactdiv">
-                    <form class="form"  id="contact" action="AddNewSubActivity" method="POST" >
-                        <img src="images/button_cancel.png" class="img" id="cancel"/>
-                        <h3>Add new sub activity</h3>
-                        <hr/><br/>
-                        <label>Process activity: <span>*</span></label>
-                        <br/>
+            <!--<fieldset>-->
 
-                        <input type="text" id="name" name="process_activity_name" value="${processActivityName}" readonly=""/><br/>
-                        <br/>
-                        <label>Sub-activity: <span>*</span></label>
-                        <br/>
-                        <input type="text" id="email"  name="sub_activity_name" placeholder="sub activity" required=""/><br/>
-                        <br/>
+            <div id="contactdiv">
+                <form class="form"  id="contact" action="AddNewSubActivity" method="POST" >
+                    <img src="images/button_cancel.png" class="img" id="cancel"/>
+                    <h3>Add new sub activity</h3>
+                    <hr/><br/>
+                    <label>Process activity: <span>*</span></label>
+                    <br/>
 
-
-                        <input type="submit" id="send" name="action" value="addActivities"/>
-                        <input type="button" id="cancel" value="Cancel"/>
-                        <br/>
-                    </form>
-
-                </div>
+                    <input type="text" id="name" name="process_activity_name" value="${processActivityName}" readonly=""/><br/>
+                    <br/>
+                    <label>Sub-activity: <span>*</span></label>
+                    <br/>
+                    <input type="text" id="email"  name="sub_activity_name" placeholder="sub activity" required=""/><br/>
+                    <br/>
 
 
-                <!--
-                        <select name="viewall" id="viewall">
-                            <option disabled selected value value="hide">Select to view</option>
-                            <option value="view">OHS</option>
-                            <option value="view_2">Cost Reduction</option>
-                            <option value="view_3">Efficiencies</option>
-                        </select>-->
+                    <input type="submit" id="send" name="action" value="addActivities"/>
+                    <input type="button" id="cancel" value="Cancel"/>
+                    <br/>
+                </form>
 
-                <form action="ActivityView" name="form" method="POST" autocomplete='off'>
+            </div>
 
-                    <h2>Process Activity: <span style="color: red;">${processActivityName}</span></h2>
-                    <h3>Select one focus area from the ones shown below </h3>
-                    <div style="overflow: scroll; width: 100%; overflow: auto">
-                    <ul class="tab">
-                        <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">OHS</a></li>
-                        <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Paris')" >Cost Reduction</a></li>
-                        <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Tokyo')">Efficiencies</a></li>
-                    </ul>  
-                        </div>
-                    <div id="London" class="tabcontent">
-                        <span onclick="this.parentElement.style.display = 'none'" class="topright">x</span>
 
-                        <table  class="main_table"  >
-                            <thead class="thead">
-                                <tr class="tr">
-                                    <th class="main_th">Criteria</th>
-                                </tr>
-                                <tr class="tr">
-                                    <th class="main_th" ></th>
+
+            <!--
+                    <select name="viewall" id="viewall">
+                        <option disabled selected value value="hide">Select to view</option>
+                        <option value="view">OHS</option>
+                        <option value="view_2">Cost Reduction</option>
+                        <option value="view_3">Efficiencies</option>
+                    </select>-->
+
+            <form action="ActivityView" name="form" method="POST" autocomplete='off'>
+
+                <h2>Process Activity: <span style="color: red;">${processActivityName}</span></h2>
+                <h3>Select one focus area from the ones shown below </h3>
+                <!--<div style="overflow: scroll; width: 100%; overflow: auto">-->
+                <ul class="tab">
+                    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">OHS</a></li>
+                    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Paris')" >Cost Reduction</a></li>
+                    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Tokyo')">Efficiencies</a></li>
+                </ul>  
+                <!--</div>-->
+
+
+                <div id="London" class="tabcontent">
+                    <span onclick="this.parentElement.style.display = 'none'" class="topright">x</span>
+                    <div class="outerDIV">
+                        <div class="innerDIV">
+                            <table  class="main_table" id="example" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr class="tr">
+                                        <th class="main_th">Criteria</th>
+                                        <th>
+                                            <input type="submit" value="print" onClick="window.print()"/> 
+                                        </th>
+                                    </tr>
+                                    <tr class="tr">
+                                        <th class="main_th" ></th>
+                                            <%for (Activities activities : list2) {
+
+                                                    SubActivity subActivity = activities.getSubActivityName();
+
+                                                    Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname1), new ProcessActivity(processActivityName), subActivity, new User(username));
+                                            %>
+                                        <th class="main_th">
+                                            <%=subActivity.getSubActivityName()%>
+                                        </th>
+                                        <%}%>
+                                        <th> <img src="images/add_new.png" width="25" height="25" id="onclick" title="Add a new sub activity column"/></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td><b>${OHS}</b></td>
                                         <%for (Activities activities : list2) {
-
                                                 SubActivity subActivity = activities.getSubActivityName();
-
                                                 Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname1), new ProcessActivity(processActivityName), subActivity, new User(username));
                                         %>
-                                    <th class="main_th" >
-                                        <%=subActivity.getSubActivityName()%>
-                                    </th>
-                                    <%}%>
-                                    <th> <img src="images/add_new.png" width="25" height="25" id="onclick" title="Add a new sub activity column"/></th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody class="tbody">
-                                <tr>
-                                    <td><b>${OHS}</b></td>
-                                    <%for (Activities activities : list2) {
-                                            SubActivity subActivity = activities.getSubActivityName();
-                                            Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname1), new ProcessActivity(processActivityName), subActivity, new User(username));
-                                    %>
-                                    <td class="main_td" >
-                                        <table  class="child_table">
-                                            <tr> 
-                                                <th >Issues </th>
-                                                <th >Solutions</th>
-                                            </tr>
-                                            <%for (Map.Entry<String, String> entry : mapresult.entrySet()) {%>
-                                            <tr>
-                                                <td class="child_td" ><%=entry.getKey()%></td>
-                                                <td class="child_td" ><%=entry.getValue()%></td>
-                                            </tr>
-                                            <%}%>
-                                            <tr>
-                                                <td colspan="2" class="center" style="background-color: transparent;">       
-                                                    <a href="ActivityView?action=leadingPractices&focusArea=${OHS}&processActivity=${processActivityName}&subActivity=<%=subActivity.getSubActivityName()%>" title="Add new issues and solutions" ><img src="images/add_new_issues.png" width="15" height="15"/></a>
-                                                </td> 
-                                            <tr>
-                                        </table> 
-                                    </td>
-                                    <%}%>
+                                        <td class="main_td">
+                                            <table  class="child_table">
+                                                <tr> 
+                                                    <th>Issues </th>
+                                                    <th>Solutions</th>
+                                                </tr>
+                                                <%for (Map.Entry<String, String> entry : mapresult.entrySet()) {%>
+                                                <tr>
+                                                    <td class="child_td" ><%=entry.getKey()%></td>
+                                                    <td class="child_td" ><%=entry.getValue()%></td>
+                                                </tr>
+                                                <%}%>
+                                                <tr>
+                                                    <td colspan="2" class="center" style="background-color: transparent;">       
+                                                        <a href="ActivityView?action=leadingPractices&focusArea=${OHS}&processActivity=${processActivityName}&subActivity=<%=subActivity.getSubActivityName()%>" title="Add new issues and solutions" ><img src="images/add_new_issues.png" width="15" height="15"/></a>
+                                                    </td> 
+                                                <tr>
+                                            </table> 
+                                        </td>
+                                        <%}%>
 
-                                </tr>
-                            </tbody>
-                        </table>
-
-
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div id="Paris" class="tabcontent">
-                        <span onclick="this.parentElement.style.display = 'none'" class="topright">x</span>
-                        <table   class="main_table">
-                            <thead class="thead">
-                                <tr class="tr">
-                                    <th class="main_th">Criteria</th>
-                                </tr>
-                                <tr class="tr">
-                                    <th class="main_th"></th>
+
+                </div>
+                <div id="Paris" class="tabcontent">
+                    <span onclick="this.parentElement.style.display = 'none'" class="topright">x</span>
+                    <div class="outerDIV">
+                        <div class="innerDIV">
+                            <table   class="main_table">
+                                <thead class="thead">
+                                    <tr class="tr">
+                                        <th class="main_th">Criteria</th>
+                                    </tr>
+                                    <tr class="tr">
+                                        <th class="main_th"></th>
+                                            <%for (Activities activities : list2) {
+                                                    SubActivity subActivity = activities.getSubActivityName();
+                                                    Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname2), new ProcessActivity(processActivityName), subActivity, new User(username));
+                                            %>
+                                        <th class="main_th">
+                                            <%=subActivity.getSubActivityName()%>
+                                        </th>
+                                        <%}%>
+                                        <th  <button type="button" title="Add a new sub activity column"><img src="images/add_new.png" width="25" height="25" id="onclick_2" /></button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                    <tr>
+                                        <td><b>${Cost}</b></td>
+
                                         <%for (Activities activities : list2) {
                                                 SubActivity subActivity = activities.getSubActivityName();
                                                 Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname2), new ProcessActivity(processActivityName), subActivity, new User(username));
                                         %>
-                                    <th class="main_th">
-                                        <%=subActivity.getSubActivityName()%>
-                                    </th>
-                                    <%}%>
-                                    <th  <button type="button" title="Add a new sub activity column"><img src="images/add_new.png" width="25" height="25" id="onclick_2" /></button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="tbody">
-                                <tr>
-                                    <td><b>${Cost}</b></td>
+                                        <td class="main_td">
+                                            <table  class="child_table">
+                                                <tr>
+                                                    <th>Issues </th>
+                                                    <th>Solutions</th>
+                                                </tr>
+                                                <%for (Map.Entry<String, String> entry : mapresult.entrySet()) {%>
+                                                <tr>
+                                                    <td class="child_td"><%=entry.getKey()%></td>
+                                                    <td class="child_td"><%=entry.getValue()%></td>
+                                                </tr>
+                                                <%}%>
+                                                <tr>
+                                                    <td colspan="2" class="center" style="background-color: transparent;">       
+                                                        <a href="ActivityView?action=leadingPractices&focusArea=${Cost}&processActivity=${processActivityName}&subActivity=<%=subActivity.getSubActivityName()%>"  title="Add new issues and solutions" ><img src="images/add_new_issues.png" width="15" height="15"/></a>
+                                                    </td> 
+                                                <tr>
+                                            </table> 
+                                        </td>
+                                        <%}%>
 
-                                    <%for (Activities activities : list2) {
-                                            SubActivity subActivity = activities.getSubActivityName();
-                                            Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname2), new ProcessActivity(processActivityName), subActivity, new User(username));
-                                    %>
-                                    <td class="main_td">
-                                        <table  class="child_table">
-                                            <tr>
-                                                <th>Issues </th>
-                                                <th>Solutions</th>
-                                            </tr>
-                                            <%for (Map.Entry<String, String> entry : mapresult.entrySet()) {%>
-                                            <tr>
-                                                <td class="child_td"><%=entry.getKey()%></td>
-                                                <td class="child_td"><%=entry.getValue()%></td>
-                                            </tr>
-                                            <%}%>
-                                            <tr>
-                                                <td colspan="2" class="center" style="background-color: transparent;">       
-                                                    <a href="ActivityView?action=leadingPractices&focusArea=${Cost}&processActivity=${processActivityName}&subActivity=<%=subActivity.getSubActivityName()%>"  title="Add new issues and solutions" ><img src="images/add_new_issues.png" width="15" height="15"/></a>
-                                                </td> 
-                                            <tr>
-                                        </table> 
-                                    </td>
-                                    <%}%>
-
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                </div>
 
-                    <div id="Tokyo" class="tabcontent">
-                        <span onclick="this.parentElement.style.display = 'none'" class="topright">x</span>
+                <div id="Tokyo" class="tabcontent">
+                    <span onclick="this.parentElement.style.display = 'none'" class="topright">x</span>
+                    <div class="outerDIV">
+                        <div class="innerDIV">
+                            <table   class="main_table">
+                                <thead class="thead">
+                                    <tr class="tr">
+                                        <th class="main_th">Criteria</th>
+                                    </tr>
+                                    <tr class="tr">
+                                        <th class="main_th"></th>
+                                            <%for (Activities activities : list2) {
+                                                    SubActivity subActivity = activities.getSubActivityName();
+                                                    Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname3), new ProcessActivity(processActivityName), subActivity, new User(username));
+                                            %>
+                                        <th class="main_th">
+                                            <%=subActivity.getSubActivityName()%>
+                                        </th>
+                                        <%}%>
+                                        <th  <button type="button" title="Add a new sub activity column"><img src="images/add_new.png" width="25" height="25" id="onclick_3" /></button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                    <tr>
+                                        <td><b>${Efficiencies}</b></td>
 
-                        <table   class="main_table">
-                            <thead class="thead">
-                                <tr class="tr">
-                                    <th class="main_th">Criteria</th>
-                                </tr>
-                                <tr class="tr">
-                                    <th class="main_th"></th>
                                         <%for (Activities activities : list2) {
                                                 SubActivity subActivity = activities.getSubActivityName();
                                                 Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname3), new ProcessActivity(processActivityName), subActivity, new User(username));
                                         %>
-                                    <th class="main_th">
-                                        <%=subActivity.getSubActivityName()%>
-                                    </th>
-                                    <%}%>
-                                    <th  <button type="button" title="Add a new sub activity column"><img src="images/add_new.png" width="25" height="25" id="onclick_3" /></button>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="tbody">
-                                <tr>
-                                    <td><b>${Efficiencies}</b></td>
+                                        <td class="main_td">
+                                            <table  class="child_table">
+                                                <tr>
+                                                    <th>Issues </th>
+                                                    <th>Solutions</th>
+                                                </tr>
+                                                <%for (Map.Entry<String, String> entry : mapresult.entrySet()) {%>
+                                                <tr>
 
-                                    <%for (Activities activities : list2) {
-                                            SubActivity subActivity = activities.getSubActivityName();
-                                            Map<String, String> mapresult = lpService.getLeadingPracticeByFocusAreaProcessActivitySubActivity3(new FocusArea(focusAreaname3), new ProcessActivity(processActivityName), subActivity, new User(username));
-                                    %>
-                                    <td class="main_td">
-                                        <table  class="child_table">
-                                            <tr>
-                                                <th>Issues </th>
-                                                <th>Solutions</th>
-                                            </tr>
-                                            <%for (Map.Entry<String, String> entry : mapresult.entrySet()) {%>
-                                            <tr>
+                                                    <td class="child_td"><%=entry.getKey()%></td>
+                                                    <td class="child_td"><%=entry.getValue()%></td>
 
-                                                <td class="child_td"><%=entry.getKey()%></td>
-                                                <td class="child_td"><%=entry.getValue()%></td>
-
-                                            </tr>
-                                            <%}%>
-                                            <tr>
-                                                <td colspan="2" class="center" style="background-color: transparent;">        
-                                                    <a href="ActivityView?action=leadingPractices&focusArea=${Efficiencies}&processActivity=${processActivityName}&subActivity=<%=subActivity.getSubActivityName()%>" type="button" title="Add new issues and solutions"><img src="images/add_new_issues.png" width="15" height="15"/></a>
-                                                </td> 
-                                            <tr>
-                                        </table> 
-                                    </td>
-                                    <%}%>
-                                </tr>
-                            </tbody>
-                        </table>
+                                                </tr>
+                                                <%}%>
+                                                <tr>
+                                                    <td colspan="2" class="center" style="background-color: transparent;">        
+                                                        <a href="ActivityView?action=leadingPractices&focusArea=${Efficiencies}&processActivity=${processActivityName}&subActivity=<%=subActivity.getSubActivityName()%>" type="button" title="Add new issues and solutions"><img src="images/add_new_issues.png" width="15" height="15"/></a>
+                                                    </td> 
+                                                <tr>
+                                            </table> 
+                                        </td>
+                                        <%}%>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </form>
-
-            </fieldset>
+                </div>
+            </form>
+            <!--</fieldset>-->
         </div>
         <div id="footer">
             <div class="shell" style="text-align: center;"> <span class="center">Copyright &copy; CSIR 2017. All Rights Reserved.</span> <span class="right"></span> </div>

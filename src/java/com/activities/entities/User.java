@@ -39,9 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role")})
 public class User implements Serializable {
 
-    @OneToMany(mappedBy = "addedBy")
-    private List<LeadingPractice> leadingPracticeList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -79,6 +76,8 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "role")
     private int role;
+    @OneToMany(mappedBy = "addedBy")
+    private List<LeadingPractice> leadingPracticeList;
 
     public User() {
     }
@@ -160,6 +159,15 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    @XmlTransient
+    public List<LeadingPractice> getLeadingPracticeList() {
+        return leadingPracticeList;
+    }
+
+    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
+        this.leadingPracticeList = leadingPracticeList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,15 +191,6 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.activities.entities.User[ username=" + username + " ]";
-    }
-
-    @XmlTransient
-    public List<LeadingPractice> getLeadingPracticeList() {
-        return leadingPracticeList;
-    }
-
-    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
-        this.leadingPracticeList = leadingPracticeList;
     }
     
 }

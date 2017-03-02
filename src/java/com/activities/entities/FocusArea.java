@@ -33,9 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "FocusArea.findByFocusAreaName", query = "SELECT f FROM FocusArea f WHERE f.focusAreaName = :focusAreaName")})
 public class FocusArea implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "focusAreaName")
-    private List<LeadingPractice> leadingPracticeList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -43,8 +40,8 @@ public class FocusArea implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "focus_area_name")
     private String focusAreaName;
-    @OneToMany(mappedBy = "focusAreaName")
-    private List<SubActivity> subActivityList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "focusAreaName")
+    private List<LeadingPractice> leadingPracticeList;
 
     public FocusArea() {
     }
@@ -62,12 +59,12 @@ public class FocusArea implements Serializable {
     }
 
     @XmlTransient
-    public List<SubActivity> getSubActivityList() {
-        return subActivityList;
+    public List<LeadingPractice> getLeadingPracticeList() {
+        return leadingPracticeList;
     }
 
-    public void setSubActivityList(List<SubActivity> subActivityList) {
-        this.subActivityList = subActivityList;
+    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
+        this.leadingPracticeList = leadingPracticeList;
     }
 
     @Override
@@ -93,15 +90,6 @@ public class FocusArea implements Serializable {
     @Override
     public String toString() {
         return "com.activities.entities.FocusArea[ focusAreaName=" + focusAreaName + " ]";
-    }
-
-    @XmlTransient
-    public List<LeadingPractice> getLeadingPracticeList() {
-        return leadingPracticeList;
-    }
-
-    public void setLeadingPracticeList(List<LeadingPractice> leadingPracticeList) {
-        this.leadingPracticeList = leadingPracticeList;
     }
     
 }
